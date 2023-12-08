@@ -1,0 +1,253 @@
+country_name,country_iso2,country_iso3,country_iso_numeric,population,capital,continent
+Andorra,AD,AND,20,84000,Andorra la Vella,EU
+United Arab Emirates,AE,ARE,784,4975593,Abu Dhabi,AS
+Afghanistan,AF,AFG,4,29121286,Kabul,AS
+Antigua and Barbuda,AG,ATG,28,86754,St. John's,NA
+Anguilla,AI,AIA,660,13254,The Valley,NA
+Albania,AL,ALB,8,2986952,Tirana,EU
+Armenia,AM,ARM,51,2968000,Yerevan,AS
+Netherlands Antilles,AN,ANT,530,136197,Willemstad,NA
+Angola,AO,AGO,24,13068161,Luanda,AF
+Antarctica,AQ,ATA,10,,,AN
+Argentina,AR,ARG,32,41343201,Buenos Aires,SA
+American Samoa,AS,ASM,16,57881,Pago Pago,OC
+Austria,AT,AUT,40,8205000,Vienna,EU
+Australia,AU,AUS,36,21515754,Canberra,OC
+Aruba,AW,ABW,533,71566,Oranjestad,NA
+Aland Islands,AX,ALA,248,26711,Mariehamn,EU
+Azerbaijan,AZ,AZE,31,8303512,Baku,AS
+Bosnia and Herzegovina,BA,BIH,70,4590000,Sarajevo,EU
+Barbados,BB,BRB,52,285653,Bridgetown,NA
+Bangladesh,BD,BGD,50,156118464,Dhaka,AS
+Belgium,BE,BEL,56,10403000,Brussels,EU
+Burkina Faso,BF,BFA,854,16241811,Ouagadougou,AF
+Bulgaria,BG,BGR,100,7148785,Sofia,EU
+Bahrain,BH,BHR,48,738004,Manama,AS
+Burundi,BI,BDI,108,9863117,Bujumbura,AF
+Benin,BJ,BEN,204,9056010,Porto-Novo,AF
+Saint BarthÃ©lemy,BL,BLM,652,8450,Gustavia,NA
+Bermuda,BM,BMU,60,65365,Hamilton,NA
+Brunei,BN,BRN,96,395027,Bandar Seri Begawan,AS
+Bolivia,BO,BOL,68,9947418,Sucre,SA
+Bonaire Saint Eustatius and Saba,BQ,BES,535,18012,,NA
+Brazil,BR,BRA,76,201103330,Brasilia,SA
+Bahamas,BS,BHS,44,301790,Nassau,NA
+Bhutan,BT,BTN,64,699847,Thimphu,AS
+Bouvet Island,BV,BVT,74,,,AN
+Botswana,BW,BWA,72,2029307,Gaborone,AF
+Belarus,BY,BLR,112,9685000,Minsk,EU
+Belize,BZ,BLZ,84,314522,Belmopan,NA
+Canada,CA,CAN,124,33679000,Ottawa,NA
+Cocos Islands,CC,CCK,166,628,West Island,AS
+Democratic Republic of the Congo,CD,COD,180,70916439,Kinshasa,AF
+Central African Republic,CF,CAF,140,4844927,Bangui,AF
+Republic of the Congo,CG,COG,178,3039126,Brazzaville,AF
+Switzerland,CH,CHE,756,7581000,Berne,EU
+Ivory Coast,CI,CIV,384,21058798,Yamoussoukro,AF
+Cook Islands,CK,COK,184,21388,Avarua,OC
+Chile,CL,CHL,152,16746491,Santiago,SA
+Cameroon,CM,CMR,120,19294149,Yaounde,AF
+China,CN,CHN,156,1330044000,Beijing,AS
+Colombia,CO,COL,170,44205293,Bogota,SA
+Costa Rica,CR,CRI,188,4516220,San Jose,NA
+Serbia and Montenegro,CS,SCG,891,10829175,Belgrade,EU
+Cuba,CU,CUB,192,11423000,Havana,NA
+Cape Verde,CV,CPV,132,508659,Praia,AF
+CuraÃ§ao,CW,CUW,531,141766, Willemstad,NA
+Christmas Island,CX,CXR,162,1500,Flying Fish Cove,AS
+Cyprus,CY,CYP,196,1102677,Nicosia,EU
+Czech Republic,CZ,CZE,203,10476000,Prague,EU
+Germany,DE,DEU,276,81802257,Berlin,EU
+Djibouti,DJ,DJI,262,740528,Djibouti,AF
+Denmark,DK,DNK,208,5484000,Copenhagen,EU
+Dominica,DM,DMA,212,72813,Roseau,NA
+Dominican Republic,DO,DOM,214,9823821,Santo Domingo,NA
+Algeria,DZ,DZA,12,34586184,Algiers,AF
+Ecuador,EC,ECU,218,14790608,Quito,SA
+Estonia,EE,EST,233,1291170,Tallinn,EU
+Egypt,EG,EGY,818,80471869,Cairo,AF
+Western Sahara,EH,ESH,732,273008,El-Aaiun,AF
+Eritrea,ER,ERI,232,5792984,Asmara,AF
+Spain,ES,ESP,724,46505963,Madrid,EU
+Ethiopia,ET,ETH,231,88013491,Addis Ababa,AF
+Finland,FI,FIN,246,5244000,Helsinki,EU
+Fiji,FJ,FJI,242,875983,Suva,OC
+Falkland Islands,FK,FLK,238,2638,Stanley,SA
+Micronesia,FM,FSM,583,107708,Palikir,OC
+Faroe Islands,FO,FRO,234,48228,Torshavn,EU
+France,FR,FRA,250,64768389,Paris,EU
+Gabon,GA,GAB,266,1545255,Libreville,AF
+United Kingdom,GB,GBR,826,62348447,London,EU
+Grenada,GD,GRD,308,107818,St. George's,NA
+Georgia,GE,GEO,268,4630000,Tbilisi,AS
+French Guiana,GF,GUF,254,195506,Cayenne,SA
+Guernsey,GG,GGY,831,65228,St Peter Port,EU
+Ghana,GH,GHA,288,24339838,Accra,AF
+Gibraltar,GI,GIB,292,27884,Gibraltar,EU
+Greenland,GL,GRL,304,56375,Nuuk,NA
+Gambia,GM,GMB,270,1593256,Banjul,AF
+Guinea,GN,GIN,324,10324025,Conakry,AF
+Guadeloupe,GP,GLP,312,443000,Basse-Terre,NA
+Equatorial Guinea,GQ,GNQ,226,1014999,Malabo,AF
+Greece,GR,GRC,300,11000000,Athens,EU
+South Georgia and the South Sandwich Islands,GS,SGS,239,30,Grytviken,AN
+Guatemala,GT,GTM,320,13550440,Guatemala City,NA
+Guam,GU,GUM,316,159358,Hagatna,OC
+Guinea-Bissau,GW,GNB,624,1565126,Bissau,AF
+Guyana,GY,GUY,328,748486,Georgetown,SA
+Hong Kong,HK,HKG,344,6898686,Hong Kong,AS
+Heard Island and McDonald Islands,HM,HMD,334,,,AN
+Honduras,HN,HND,340,7989415,Tegucigalpa,NA
+Croatia,HR,HRV,191,4491000,Zagreb,EU
+Haiti,HT,HTI,332,9648924,Port-au-Prince,NA
+Hungary,HU,HUN,348,9982000,Budapest,EU
+Indonesia,ID,IDN,360,242968342,Jakarta,AS
+Ireland,IE,IRL,372,4622917,Dublin,EU
+Israel,IL,ISR,376,7353985,Jerusalem,AS
+Isle of Man,IM,IMN,833,75049,"Douglas, Isle of Man",EU
+India,IN,IND,356,1173108018,New Delhi,AS
+British Indian Ocean Territory,IO,IOT,86,4000,Diego Garcia,AS
+Iraq,IQ,IRQ,368,29671605,Baghdad,AS
+Iran,IR,IRN,364,76923300,Tehran,AS
+Iceland,IS,ISL,352,308910,Reykjavik,EU
+Italy,IT,ITA,380,60340328,Rome,EU
+Jersey,JE,JEY,832,90812,Saint Helier,EU
+Jamaica,JM,JAM,388,2847232,Kingston,NA
+Jordan,JO,JOR,400,6407085,Amman,AS
+Japan,JP,JPN,392,127288000,Tokyo,AS
+Kenya,KE,KEN,404,40046566,Nairobi,AF
+Kyrgyzstan,KG,KGZ,417,5508626,Bishkek,AS
+Cambodia,KH,KHM,116,14453680,Phnom Penh,AS
+Kiribati,KI,KIR,296,92533,Tarawa,OC
+Comoros,KM,COM,174,773407,Moroni,AF
+Saint Kitts and Nevis,KN,KNA,659,49898,Basseterre,NA
+North Korea,KP,PRK,408,22912177,Pyongyang,AS
+South Korea,KR,KOR,410,48422644,Seoul,AS
+Kuwait,KW,KWT,414,2789132,Kuwait City,AS
+Cayman Islands,KY,CYM,136,44270,George Town,NA
+Kazakhstan,KZ,KAZ,398,15340000,Astana,AS
+Laos,LA,LAO,418,6368162,Vientiane,AS
+Lebanon,LB,LBN,422,4125247,Beirut,AS
+Saint Lucia,LC,LCA,662,160922,Castries,NA
+Liechtenstein,LI,LIE,438,35000,Vaduz,EU
+Sri Lanka,LK,LKA,144,21513990,Colombo,AS
+Liberia,LR,LBR,430,3685076,Monrovia,AF
+Lesotho,LS,LSO,426,1919552,Maseru,AF
+Lithuania,LT,LTU,440,3565000,Vilnius,EU
+Luxembourg,LU,LUX,442,497538,Luxembourg,EU
+Latvia,LV,LVA,428,2217969,Riga,EU
+Libya,LY,LBY,434,6461454,Tripolis,AF
+Morocco,MA,MAR,504,31627428,Rabat,AF
+Monaco,MC,MCO,492,32965,Monaco,EU
+Moldova,MD,MDA,498,4324000,Chisinau,EU
+Montenegro,ME,MNE,499,666730,Podgorica,EU
+Saint Martin,MF,MAF,663,35925,Marigot,NA
+Madagascar,MG,MDG,450,21281844,Antananarivo,AF
+Marshall Islands,MH,MHL,584,65859,Majuro,OC
+Macedonia,MK,MKD,807,2061000,Skopje,EU
+Mali,ML,MLI,466,13796354,Bamako,AF
+Myanmar,MM,MMR,104,53414374,Nay Pyi Taw,AS
+Mongolia,MN,MNG,496,3086918,Ulan Bator,AS
+Macao,MO,MAC,446,449198,Macao,AS
+Northern Mariana Islands,MP,MNP,580,53883,Saipan,OC
+Martinique,MQ,MTQ,474,432900,Fort-de-France,NA
+Mauritania,MR,MRT,478,3205060,Nouakchott,AF
+Montserrat,MS,MSR,500,9341,Plymouth,NA
+Malta,MT,MLT,470,403000,Valletta,EU
+Mauritius,MU,MUS,480,1294104,Port Louis,AF
+Maldives,MV,MDV,462,395650,Male,AS
+Malawi,MW,MWI,454,15447500,Lilongwe,AF
+Mexico,MX,MEX,484,112468855,Mexico City,NA
+Malaysia,MY,MYS,458,28274729,Kuala Lumpur,AS
+Mozambique,MZ,MOZ,508,22061451,Maputo,AF
+Namibia,NA,NAM,516,2128471,Windhoek,AF
+New Caledonia,NC,NCL,540,216494,Noumea,OC
+Niger,NE,NER,562,15878271,Niamey,AF
+Norfolk Island,NF,NFK,574,1828,Kingston,OC
+Nigeria,NG,NGA,566,154000000,Abuja,AF
+Nicaragua,NI,NIC,558,5995928,Managua,NA
+Netherlands,NL,NLD,528,16645000,Amsterdam,EU
+Norway,NO,NOR,578,5009150,Oslo,EU
+Nepal,NP,NPL,524,28951852,Kathmandu,AS
+Nauru,NR,NRU,520,10065,Yaren,OC
+Niue,NU,NIU,570,2166,Alofi,OC
+New Zealand,NZ,NZL,554,4252277,Wellington,OC
+Oman,OM,OMN,512,2967717,Muscat,AS
+Panama,PA,PAN,591,3410676,Panama City,NA
+Peru,PE,PER,604,29907003,Lima,SA
+French Polynesia,PF,PYF,258,270485,Papeete,OC
+Papua New Guinea,PG,PNG,598,6064515,Port Moresby,OC
+Philippines,PH,PHL,608,99900177,Manila,AS
+Pakistan,PK,PAK,586,184404791,Islamabad,AS
+Poland,PL,POL,616,38500000,Warsaw,EU
+Saint Pierre and Miquelon,PM,SPM,666,7012,Saint-Pierre,NA
+Pitcairn,PN,PCN,612,46,Adamstown,OC
+Puerto Rico,PR,PRI,630,3916632,San Juan,NA
+Palestinian Territory,PS,PSE,275,3800000,East Jerusalem,AS
+Portugal,PT,PRT,620,10676000,Lisbon,EU
+Palau,PW,PLW,585,19907,Melekeok,OC
+Paraguay,PY,PRY,600,6375830,Asuncion,SA
+Qatar,QA,QAT,634,840926,Doha,AS
+Reunion,RE,REU,638,776948,Saint-Denis,AF
+Romania,RO,ROU,642,21959278,Bucharest,EU
+Serbia,RS,SRB,688,7344847,Belgrade,EU
+Russia,RU,RUS,643,140702000,Moscow,EU
+Rwanda,RW,RWA,646,11055976,Kigali,AF
+Saudi Arabia,SA,SAU,682,25731776,Riyadh,AS
+Solomon Islands,SB,SLB,90,559198,Honiara,OC
+Seychelles,SC,SYC,690,88340,Victoria,AF
+Sudan,SD,SDN,729,35000000,Khartoum,AF
+Sweden,SE,SWE,752,9555893,Stockholm,EU
+Singapore,SG,SGP,702,4701069,Singapur,AS
+Saint Helena,SH,SHN,654,7460,Jamestown,AF
+Slovenia,SI,SVN,705,2007000,Ljubljana,EU
+Svalbard and Jan Mayen,SJ,SJM,744,2550,Longyearbyen,EU
+Slovakia,SK,SVK,703,5455000,Bratislava,EU
+Sierra Leone,SL,SLE,694,5245695,Freetown,AF
+San Marino,SM,SMR,674,31477,San Marino,EU
+Senegal,SN,SEN,686,12323252,Dakar,AF
+Somalia,SO,SOM,706,10112453,Mogadishu,AF
+Suriname,SR,SUR,740,492829,Paramaribo,SA
+South Sudan,SS,SSD,728,8260490,Juba,AF
+Sao Tome and Principe,ST,STP,678,175808,Sao Tome,AF
+El Salvador,SV,SLV,222,6052064,San Salvador,NA
+Sint Maarten,SX,SXM,534,37429,Philipsburg,NA
+Syria,SY,SYR,760,22198110,Damascus,AS
+Swaziland,SZ,SWZ,748,1354051,Mbabane,AF
+Turks and Caicos Islands,TC,TCA,796,20556,Cockburn Town,NA
+Chad,TD,TCD,148,10543464,N'Djamena,AF
+French Southern Territories,TF,ATF,260,140,Port-aux-Francais,AN
+Togo,TG,TGO,768,6587239,Lome,AF
+Thailand,TH,THA,764,67089500,Bangkok,AS
+Tajikistan,TJ,TJK,762,7487489,Dushanbe,AS
+Tokelau,TK,TKL,772,1466,,OC
+East Timor,TL,TLS,626,1154625,Dili,OC
+Turkmenistan,TM,TKM,795,4940916,Ashgabat,AS
+Tunisia,TN,TUN,788,10589025,Tunis,AF
+Tonga,TO,TON,776,122580,Nuku'alofa,OC
+Turkey,TR,TUR,792,77804122,Ankara,AS
+Trinidad and Tobago,TT,TTO,780,1228691,Port of Spain,NA
+Tuvalu,TV,TUV,798,10472,Funafuti,OC
+Taiwan,TW,TWN,158,22894384,Taipei,AS
+Tanzania,TZ,TZA,834,41892895,Dodoma,AF
+Ukraine,UA,UKR,804,45415596,Kiev,EU
+Uganda,UG,UGA,800,33398682,Kampala,AF
+United States Minor Outlying Islands,UM,UMI,581,,,OC
+United States,US,USA,840,310232863,Washington,NA
+Uruguay,UY,URY,858,3477000,Montevideo,SA
+Uzbekistan,UZ,UZB,860,27865738,Tashkent,AS
+Vatican,VA,VAT,336,921,Vatican City,EU
+Saint Vincent and the Grenadines,VC,VCT,670,104217,Kingstown,NA
+Venezuela,VE,VEN,862,27223228,Caracas,SA
+British Virgin Islands,VG,VGB,92,21730,Road Town,NA
+U.S. Virgin Islands,VI,VIR,850,108708,Charlotte Amalie,NA
+Vietnam,VN,VNM,704,89571130,Hanoi,AS
+Vanuatu,VU,VUT,548,221552,Port Vila,OC
+Wallis and Futuna,WF,WLF,876,16025,Mata Utu,OC
+Samoa,WS,WSM,882,192001,Apia,OC
+Kosovo,XK,XKX,,1800000,Pristina,EU
+Yemen,YE,YEM,887,23495361,Sanaa,AS
+Mayotte,YT,MYT,175,159042,Mamoudzou,AF
+South Africa,ZA,ZAF,710,49000000,Pretoria,AF
+Zambia,ZM,ZMB,894,13460305,Lusaka,AF
+Zimbabwe,ZW,ZWE,716,11651858,Harare,AF

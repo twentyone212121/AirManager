@@ -1,22 +1,31 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <script src="https://unpkg.com/htmx.org@1.9.8"></script>
-  <meta charset="utf-8">
-
-  <title>#(title)</title>
+    <meta charset="UTF-8">
+    <title>#(title)</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.4/dist/htmx.min.js"></script>
 </head>
-
 <body>
-    <h3>
-        Search Flights
-    </h3>
-    <input class="form-control" type="search"
-           name="search" placeholder="Begin Typing To Search Flights..."
-           hx-post="/search"
-           hx-trigger="input changed delay:500ms, search"
-           hx-target="#text-field">
-
-    <p id="text-field"></p>
+<div class="wrapper">
+    <header></header>
+    <main>
+        <section class="coming-flights-widget" id="coming-flights-widget"></section>
+        <section class="main-section welcome-text">
+            <h1>Welcome to Air Manager</h1>
+            <p>Please proceed to the "Sign in" page if you wish to:</p>
+            <ul>
+                <li>manage your tickets</li>
+                <li>manage your information</li>
+                <li>manage flights (for administrator)</li>
+            </ul>
+            <p>If you only need to search or buy tickets, please click "Search".</p>
+        </section>
+    </main>
+    <footer></footer>
+</div>
+<script src="src/constructors/header.js"></script>
+<script src="src/constructors/coming-flights-widget.js"></script>
+<script src="src/script.js"></script>
 </body>
 </html>

@@ -1,0 +1,276 @@
+:root {
+    --cream: #FBFFF1;
+    --light-blue: #B4C5E4;
+    --blue: #3D52D5;
+    --dark-blue: #090C9B;
+    --black: #0D090A;
+}
+
+body {
+    margin: 0 auto;
+    font-family: Arial, serif;
+    color: var(--black);
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 45px);
+}
+
+.profile-main, .manager-main {
+    flex-direction: column;
+    justify-content: unset;
+}
+
+header {
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    background-color: var(--blue);
+    color: var(--cream);
+    align-items: center;
+    padding: 0 30px;
+}
+
+ul li {
+    text-align: left;
+}
+nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header a {
+    color: var(--cream);
+}
+
+a {
+    color: var(--black);
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, p {
+    margin: 0;
+}
+
+h1 {
+    margin-bottom: 15px;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 span {
+    font-weight: 300;
+}
+
+table {
+    width: 100%;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th, td {
+    padding: 3px;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: var(--blue);
+    color: var(--cream);
+}
+
+th {
+    height: 30px;
+    border: 1px solid var(--dark-blue);
+}
+
+th:hover {
+    background-color: var(--dark-blue);
+}
+
+td {
+    height: 30px;
+}
+
+tr:hover {
+    background-color: var(--blue);
+}
+
+th, tr{
+    transition: 0.1s all ease-in-out;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: var(--light-blue);
+    border: 1px solid var(--blue);
+    transition: 0.3s all ease;
+    max-width: 100px;
+}
+
+button:hover {
+    background-color: var(--blue);
+    color: var(--cream);
+}
+
+input, select {
+    border: 1px solid var(--black);
+    padding: 5px;
+    min-width: 150px;
+    border-radius: 5px;
+}
+
+.coming-flights-widget {
+    border-radius: 15px;
+    margin: 10px;
+    max-width: 260px;
+    height: 500px;
+    background-color: var(--light-blue);
+    text-align: center;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.coming-flights-widget::-webkit-scrollbar, .flights-table::-webkit-scrollbar {
+    width: 5px;
+}
+
+.coming-flights-widget::-webkit-scrollbar-thumb, .flights-table::-webkit-scrollbar-thumb {
+    background-color: var(--black);
+    border-radius: 5px;
+}
+
+.coming-flights-widget::-webkit-scrollbar-track, .flights-table::-webkit-scrollbar-track {
+    background-color: #f2f2f2;
+}
+
+.main-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin: 10px;
+}
+
+.welcome-text {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.search-section {
+    gap: 30px;
+}
+
+.search {
+    max-width: 500px;
+}
+
+.search form {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.form-element {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.flights-table {
+    border-radius: 15px;
+    overflow: auto;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+    gap: 20px;
+}
+
+.table-button:hover {
+    color: var(--dark-blue)
+}
+
+.authorization {
+    align-self: center;
+}
+
+.authorization form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-cell{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    text-align: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-cell label{
+    flex-grow: 1;
+}
+
+.table-wrapper {
+    border-radius: 15px;
+    overflow: auto;
+    margin-top: 20px;
+    border: 1px solid var(--black);
+}
+
+.table-wrapper table tbody tr:hover {
+    background-color: var(--light-blue) !important;
+}
+
+.profile-main, .manager-main {
+    margin: 20px 30px;
+}
+
+.manager-search {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.manager-search div{
+    max-width: 300px;
+}
+
+.manager-search form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.manager-search select {
+    width: 140px;
+}
+
+.manager-search label {
+    width: 35%;
+    text-align: left;
+}
+
+
+
+
+
+

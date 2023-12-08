@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <script src="https://unpkg.com/htmx.org@1.9.8"></script>
+  <meta charset="utf-8">
+
+  <title>#(title)</title>
+</head>
+
+<body>
+    <h3>
+        Search Flights
+    </h3>
+    <input class="form-control" type="search"
+           name="search" placeholder="Begin Typing To Search Flights..."
+           hx-post="/search"
+           hx-trigger="input changed delay:500ms, search"
+           hx-target="#text-field">
+
+    <p id="text-field"></p>
+</body>
+</html>

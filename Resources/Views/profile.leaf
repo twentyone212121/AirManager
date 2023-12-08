@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My profile</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.4/dist/htmx.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <header></header>
+    <main class="profile-main">
+        <section class="user-information">
+            <div class="content">
+                <h2>My profile</h2>
+                <h3>Name: <span class="name">Alina</span> <span class="surname">Pavliuk</span></h3>
+                <h3>Passport number: <span class="passport">FX9000</span></h3>
+                <h3>Phone number: <span class="phone">+3000000000</span></h3>
+                <h3>Email: <span class="email">alino4kap12@gmail.com</span></h3>
+                <h3>Gender: <span class="gender">Female</span></h3>
+                <h3>Points: <span class="passport">1000</span></h3>
+            </div>
+        </section>
+        <section class="user-flights">
+            <div class="content">
+                <h2>My flights</h2>
+                <div class="table-wrapper">
+                    <table id="user-flights-list">
+                        <thead>
+                        <tr>
+                            <th colspan="5">Upcoming flights:</th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Number</th>
+                            <th>From-To</th>
+                            <th>Ticket</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="table-wrapper">
+                    <table id="user-previous-flights-list">
+                        <thead>
+                        <tr>
+                            <th colspan="4">Previous flights:</th>
+                        </tr>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Number</th>
+                            <th>From-To</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+<script src="src/constructors/header.js"></script>
+<script src="src/constructors/user-flights.js"></script>
+<script src="src/script.js"></script>
+</body>
+</html>

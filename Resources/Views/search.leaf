@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Title</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.4/dist/htmx.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <header></header>
+    <main>
+        <section class="coming-flights-widget" id="coming-flights-widget"></section>
+        <section class="main-section search-section">
+            <h2>Search for flights:</h2>
+            <div class="search">
+                <form action="">
+                    <div class="form-cell">
+                        <label for="from">From</label>
+                        <input type="text" id="from">
+                    </div>
+                    <div class="form-cell">
+                        <label for="to">To</label>
+                        <input type="text" id="to">
+                    </div>
+                    <div class="form-cell">
+                        <label for="date">Date</label>
+                        <input type="date" id="date">
+                    </div>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div class="filter">
+                <label for="filters">Sort by:</label>
+                <select name="filters" id="filters">
+                    <option value="price">By price</option>
+                    <option value="time">By duration</option>
+                    <option value="departure">By departure time</option>
+                    <option value="arrival">By arrival time</option>
+                </select>
+            </div>
+            <div class="result">
+                <h3>From: <span>Kyiv</span> To: <span>Amsterdam</span></h3>
+                <div class="table-wrapper">
+                    <table id="found-flights">
+                        <thead>
+                        <tr>
+                            <th style="width: 15%">Departure time</th>
+                            <th style="width: 15%">Arival time</th>
+                            <th style="width: 10%">Number</th>
+                            <th style="width: 15%">Duration</th>
+                            <th style="width: 15%">Price</th>
+                            <th style="width: 30%">Buy</th>
+                        </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+<script src="src/constructors/header.js"></script>
+<script src="src/constructors/flight-search.js"></script>
+<script src="src/constructors/coming-flights-widget.js"></script>
+<script src="src/script.js"></script>
+</html>

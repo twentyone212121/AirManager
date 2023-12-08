@@ -29,9 +29,6 @@ public func configure(_ app: Application) async throws {
     )
     app.middleware.use(fileMiddleware)
     
-//    app.services.register { _ -> DatabaseManager in
-//            return DatabaseManager()
-//        }
     app.databaseManager = DatabaseManager()
 
     // register routes

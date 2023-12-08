@@ -8,6 +8,11 @@ public func configure(_ app: Application) async throws {
 
     app.views.use(.leaf)
 
+    // Serves files from `Public/` directory
+    let fileMiddleware = FileMiddleware(
+        publicDirectory: app.directory.publicDirectory
+    )
+    app.middleware.use(fileMiddleware)
     
 
     // register routes

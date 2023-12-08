@@ -14,7 +14,6 @@ public func configure(_ app: Application) async throws {
     )
     app.middleware.use(fileMiddleware)
     
-
     // register routes
     try routes(app)
 }

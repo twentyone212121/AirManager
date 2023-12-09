@@ -19,6 +19,7 @@ private struct DatabaseManagerKey: StorageKey {
 // configures your application
 public func configure(_ app: Application) async throws {
     app.views.use(.leaf)
+    app.leaf.tags["formatDouble"] = FormatDoubleTag()
 
     // Serves files from `Public/` directory
     let fileMiddleware = FileMiddleware(

@@ -3,14 +3,29 @@ import SQLite
 import Vapor
 
 struct Flight: Content {
-    let date: String
+    var date: String
     let fromIata: String
     let fromDate: Date
     let toIata: String
     let toDate: Date
-    let duration: Double
+    var duration: Double
+    let freeSeats: Int
     let number: Int
     let price: Double
+    
+    mutating func afterDecode() throws {
+        // Check if date is not provided, generate a default date (e.g., today)
+        if self.date.isEmpty {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd"
+            self.date = dateFormatter.string(from: self.fromDate)
+        }
+
+        // Check if duration is not provided, calculate it based on fromDate and toDate
+        if self.duration == 0 {
+            self.duration = self.toDate.timeIntervalSince(self.fromDate) / 3600 // Duration in hours
+        }
+    }
 }
 
 class DatabaseManager {
@@ -78,6 +93,7 @@ class DatabaseManager {
                     toIata: flight[flights.arrivalIataColumn],
                     toDate: flight[flights.arrivalScheduledColumn],
                     duration: flight[flights.durationColumn],
+                    freeSeats: flight[flights.freeSeatsColumn],
                     number: flight[flights.flightNumberColumn],
                     price: flight[flights.priceColumn]))
             }
@@ -85,6 +101,22 @@ class DatabaseManager {
         return result
     }
 
+    func addFlight(flight: Flight) throws {
+        let query = flights.table
+            .insert(
+                flights.dateColumn <- flight.date,
+                flights.priceColumn <- flight.price,
+                flights.durationColumn <- flight.duration,
+                flights.freeSeatsColumn <- flight.freeSeats,
+                flights.arrivalIataColumn <- flight.toIata,
+                flights.flightNumberColumn <- flight.number,
+                flights.departureIataColumn <- flight.fromIata,
+                flights.arrivalScheduledColumn <- flight.toDate,
+                flights.departureScheduledColumn <- flight.fromDate)
+        
+        try db.run(query)
+    }
+    
 //    func getUsers() -> [String: Int] {
 //        var result: [String: Int] = [:]
 //

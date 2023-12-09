@@ -14,7 +14,7 @@
         <section class="main-section search-section">
             <h2>Search for flights:</h2>
             <div class="search">
-                <form action="" hx-post="/search" hx-target="#search-results">
+                <form action="" hx-post="/search" hx-target="#result">
                     <div class="form-cell">
                         <label for="from">From</label>
                         <input type="text" id="from" name="from">
@@ -30,33 +30,7 @@
                     <button type="submit">Search</button>
                 </form>
             </div>
-            <div class="filter">
-                <label for="filters">Sort by:</label>
-                <select name="filters" id="filters">
-                    <option value="price">By price</option>
-                    <option value="time">By duration</option>
-                    <option value="departure">By departure time</option>
-                    <option value="arrival">By arrival time</option>
-                </select>
-            </div>
-            <div class="result">
-                <h3>From: <span>Kyiv</span> To: <span>Amsterdam</span></h3>
-                <div class="table-wrapper">
-                    <table id="found-flights">
-                        <thead>
-                        <tr>
-                            <th style="width: 15%">Departure time</th>
-                            <th style="width: 15%">Arival time</th>
-                            <th style="width: 10%">Number</th>
-                            <th style="width: 15%">Duration</th>
-                            <th style="width: 15%">Price</th>
-                            <th style="width: 30%">Buy</th>
-                        </tr>
-                        </thead>
-                        <tbody id="search-results"></tbody>
-                    </table>
-                </div>
-            </div>
+            <div id="result"></div>
         </section>
     </main>
 </div>

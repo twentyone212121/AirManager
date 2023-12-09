@@ -10,7 +10,7 @@
 <div class="wrapper">
     <header></header>
     <main class="profile-main">
-        <section class="user-information">
+        <section class="user-information" hx-get="/user/{id}/info">
             <div class="content">
                 <h2>My profile</h2>
                 <h3>Name: <span class="name">Alina</span> <span class="surname">Pavliuk</span></h3>
@@ -38,7 +38,7 @@
                             <th>Ticket</th>
                         </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody hx-get="/user/{id}/flights/cur></tbody">
                     </table>
                 </div>
                 <div class="table-wrapper">
@@ -54,7 +54,7 @@
                             <th>From-To</th>
                         </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody hx-get="/user/{id}/flights/prev"></tbody>
                     </table>
                 </div>
             </div>

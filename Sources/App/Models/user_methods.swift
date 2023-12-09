@@ -10,6 +10,7 @@ struct User: Content {
     let passportNumber: String
     let phoneNumber: Int
     let gender: String
+//     let points: Int
 }
 
 struct LoginData: Content {

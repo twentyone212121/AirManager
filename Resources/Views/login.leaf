@@ -11,14 +11,14 @@
     <header></header>
     <main>
         <section class="authorization">
-            <form action="">
+            <form hx-post="/login">
                 <div class="form-cell">
                     <label for="email">Email</label>
-                    <input id="email" type="email">
+                    <input id="email" type="email" name="email">
                 </div>
                 <div class="form-cell">
                     <label for="password">Password</label>
-                    <input id="password" type="password">
+                    <input id="password" type="password" name="password">
                 </div>
                 <button>Sign in</button>
             </form>

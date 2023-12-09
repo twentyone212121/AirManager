@@ -11,14 +11,10 @@
     <header></header>
     <main>
         <section class="authorization">
-            <form action="">
+            <form hx-post="/user/register">
                 <div class="form-cell">
-                    <label for="name">Name</label>
-                    <input id="name" name="name">
-                </div>
-                <div class="form-cell">
-                    <label for="surname">Surname</label>
-                    <input id="surname" name="surname">
+                    <label for="full name">Name</label>
+                    <input id="name" name="fullName">
                 </div>
                 <div class="form-cell">
                     <label for="gender">Gender</label>
@@ -29,11 +25,11 @@
                 </div>
                 <div class="form-cell">
                     <label for="phone">Phone number</label>
-                    <input id="phone" name="phone">
+                    <input id="phone" name="phoneNumber">
                 </div>
                 <div class="form-cell">
                     <label for="passport">Passport number</label>
-                    <input id="passport" name="passport">
+                    <input id="passport" name="passportNumber">
                 </div>
                 <div class="form-cell">
                     <label for="email">Email</label>
@@ -43,7 +39,7 @@
                     <label for="password">Password</label>
                     <input id="password" type="password" name="password">
                 </div>
-                <button>Sign up</button>
+                <button type="submit">Sign up</button>
             </form>
         </section>
     </main>

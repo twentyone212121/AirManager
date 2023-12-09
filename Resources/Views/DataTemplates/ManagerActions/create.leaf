@@ -1,37 +1,33 @@
 <h2>Create new flight</h2>
 <div class="create-flights">
-    <form action="submit" hx-post="/manager/create">
+    <form action="submit" hx-post="/manager/create" hx-swap="afterend">
         <div class="form-cell">
             <label for="flight-number">Flight number: </label>
             <input type="text" id="flight-number" name="number">
         </div>
         <div class="form-cell">
-            <label for="from">From: </label>
-            <input type="text" id="from" name="from">
+            <label for="from">From airport: </label>
+            <input type="text" id="from" name="fromIata">
         </div>
         <div class="form-cell">
-            <label for="to">To: </label>
-            <input type="text" id="to" name="to">
+            <label for="to">To airport: </label>
+            <input type="text" id="to" name="toIata">
         </div>
         <div class="form-cell">
-            <label for="price">Price: </label>
-            <input type="text" id="price" name="price">
+            <label for="price">Price (USD): </label>
+            <input type="number" id="price" name="price">
         </div>
         <div class="form-cell">
-            <label for="date">Date: </label>
-            <input type="date" id="date" name="date">
+            <label for="date-from">Date from: </label>
+            <input type="datetime-local" id="date" name="fromDate">
         </div>
         <div class="form-cell">
-            <label for="time-from">Time from: </label>
-            <input type="time" id="time-from" name="time-from">
-        </div>
-        <div class="form-cell">
-            <label for="time-to">Time to: </label>
-            <input type="time" id="time-to" name="time-to">
+            <label for="date-to">Date to: </label>
+            <input type="datetime-local" id="date-to" name="toDate">
         </div>
         <div class="form-cell">
             <label for="seats">Free seats: </label>
-            <input type="number" id="seats" name="seats">
+            <input type="number" id="seats" name="freeSeats">
         </div>
         <button type="submit">Create</button>
     </form>

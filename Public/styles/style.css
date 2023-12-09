@@ -127,7 +127,7 @@ button:hover {
 input, select {
     border: 1px solid var(--black);
     padding: 5px;
-    min-width: 150px;
+    min-width: 175px;
     border-radius: 5px;
 
     -ms-box-sizing:content-box;

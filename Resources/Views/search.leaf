@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<title>Search</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src="https://unpkg.com/htmx.org@1.9.4/dist/htmx.min.js"></script>
 </head>

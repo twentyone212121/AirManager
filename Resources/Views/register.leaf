@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="https://unpkg.com/htmx.org@1.9.4/dist/htmx.min.js"></script>
+</head>
+<body>
+<div class="wrapper">
+    <header></header>
+    <main>
+        <section class="authorization">
+            <form action="">
+                <div class="form-cell">
+                    <label for="name">Name</label>
+                    <input id="name" name="name">
+                </div>
+                <div class="form-cell">
+                    <label for="surname">Surname</label>
+                    <input id="surname" name="surname">
+                </div>
+                <div class="form-cell">
+                    <label for="gender">Gender</label>
+                    <select id="gender" name="gender">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
+                </div>
+                <div class="form-cell">
+                    <label for="phone">Phone number</label>
+                    <input id="phone" name="phone">
+                </div>
+                <div class="form-cell">
+                    <label for="passport">Passport number</label>
+                    <input id="passport" name="passport">
+                </div>
+                <div class="form-cell">
+                    <label for="email">Email</label>
+                    <input id="email" type="email" name="email">
+                </div>
+                <div class="form-cell">
+                    <label for="password">Password</label>
+                    <input id="password" type="password" name="password">
+                </div>
+                <button>Sign up</button>
+            </form>
+        </section>
+    </main>
+</div>
+<script src="src/constructors/header.js"></script>
+<script src="src/script.js"></script>
+</body>
+</html>

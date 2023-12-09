@@ -129,6 +129,11 @@ input, select {
     padding: 5px;
     min-width: 150px;
     border-radius: 5px;
+
+    -ms-box-sizing:content-box;
+    -moz-box-sizing:content-box;
+    -webkit-box-sizing:content-box;
+    box-sizing:content-box;
 }
 
 .coming-flights-widget {

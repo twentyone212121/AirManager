@@ -8,6 +8,7 @@ final class PageController: RouteCollection {
         routes.get("profile", use: profileHandler)
         routes.get("search", use: searchHandler)
         routes.get("login", use: loginHandler)
+        routes.get("register", use: registerHandler)
     }
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -28,6 +29,10 @@ final class PageController: RouteCollection {
     
     func loginHandler(_ req: Request) throws -> EventLoopFuture<View> {
         return req.view.render("login")
+    }
+
+    func registerHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        return req.view.render("register")
     }
 }
 

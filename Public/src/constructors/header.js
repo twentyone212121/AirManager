@@ -6,6 +6,7 @@ document.querySelector("header").innerHTML = `
         <li><a href="/profile">(My profile)</a></li>
         <li><a href="/search">Search</a></li>
         <li><a href="/login">Sign in</a></li>
+        <li><a href="/register">Sign up</a></li>
     </ul>
 </nav>
 `

@@ -198,7 +198,7 @@ input, select {
     overflow: auto;
 }
 
-#result {
+.response-container {
     display: contents;
 }
 

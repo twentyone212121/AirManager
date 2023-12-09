@@ -1,0 +1,10 @@
+<h2>Change existing flight</h2>
+<div class="flight-search-by form-cell">
+    <label for="search-by">Search by: </label>
+    <select name="search-by" id="search-by" hx-get="/manager/search/search-by">
+        <option disabled selected>Select an option</option>
+        <option value="place">By from/to</option>
+        <option value="time">By flight number</option>
+    </select>
+</div>
+<div id="search"></div>

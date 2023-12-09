@@ -13,97 +13,14 @@
         <section class="manager-search">
             <div class="choose-action form-cell">
                 <label for="action">Choose action: </label>
-                <select name="action" id="action" hx-get="/manager/action" hx-target="#action">
+                <select name="action" hx-post="/manager/action" hx-target="#action">
                     <option disabled selected>Select an option</option>
                     <option value="create">Create new flight</option>
                     <option value="change">Change existing flight</option>
                     <option value="report">Generate report</option>
                 </select>
             </div>
-            <h2>Create new flight</h2>
-            <div id="action"></div>
-            <div class="create-flights">
-                <form action="submit" hx-post="/manager/create">
-                    <div class="form-cell">
-                        <label for="flight-number">Flight number: </label>
-                        <input type="text" id="flight-number" name="number">
-                    </div>
-                    <div class="form-cell">
-                        <label for="from">From: </label>
-                        <input type="text" id="from" name="from">
-                    </div>
-                    <div class="form-cell">
-                        <label for="to">To: </label>
-                        <input type="text" id="to" name="to">
-                    </div>
-                    <div class="form-cell">
-                        <label for="price">Price: </label>
-                        <input type="text" id="price" name="price">
-                    </div>
-                    <div class="form-cell">
-                        <label for="date">Date: </label>
-                        <input type="date" id="date" name="date">
-                    </div>
-                    <div class="form-cell">
-                        <label for="time-from">Time from: </label>
-                        <input type="time" id="time-from" name="time-from">
-                    </div>
-                    <div class="form-cell">
-                        <label for="time-to">Time to: </label>
-                        <input type="time" id="time-to" name="time-to">
-                    </div>
-                    <div class="form-cell">
-                        <label for="seats">Free seats: </label>
-                        <input type="number" id="seats" name="seats">
-                    </div>
-                    <button type="submit">Create</button>
-                </form>
-            </div>
-            <h2>Change existing flight</h2>
-            <div class="flight-search-by form-cell">
-                <label for="search-by">Search by: </label>
-                <select name="search-by" id="search-by" hx-get="/manager/search/search-by">
-                    <option disabled selected>Select an option</option>
-                    <option value="place">By from/to</option>
-                    <option value="time">By flight number</option>
-                </select>
-            </div>
-            <div id="search"></div>
-            <div class="by-from-to">
-                <form hx-post="/search">
-                    <div class="form-cell">
-                        <label for="from">From: </label>
-                        <input type="text" id="from" name="to">
-                    </div>
-                    <div class="form-cell">
-                        <label for="to">To: </label>
-                        <input type="text" id="to" name="to">
-                    </div>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            <div class="by-number">
-                <form hx-post="/search">
-                    <div class="form-cell">
-                        <label for="flight-number">Flight number: </label>
-                        <input type="text" id="flight-number" name="number">
-                    </div>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            <div id="search"></div>
-            <h2>Generate report</h2>
-            <div class="generate-report-on form-cell">
-                <label for="report-on">Report on</label>
-                <select name="report-on" id="report-on" hx-get="/manager/report/on>
-                    <option disabled selected>Select an option</option>
-                    <option value="price">Passengers</option>
-                    <option value="time">Fuel usage</option>
-                    <option value="departure">Airport flights</option>
-                    <option value="arrival">Time interval flights</option>
-                </select>
-            </div>
-            <div id="generate-report"></div>
+            <div id="action" class="response-container"></div>
         </section>
     </main>
 </div>

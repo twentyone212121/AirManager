@@ -1,6 +1,29 @@
 import Foundation
 import SQLite
 
+func parseCSVRow(_ row: String) -> [String] {
+    var fields: [String] = []
+    
+    var currentField = ""
+    var insideQuotes = false
+    
+    for char in row {
+        if char == "\"" {
+            insideQuotes.toggle()
+        } else if char == "," && !insideQuotes {
+            fields.append(currentField)
+            currentField = ""
+        } else {
+            currentField.append(char)
+        }
+    }
+    
+    // Add the last field
+    fields.append(currentField)
+    
+    return fields
+}
+
 struct CountriesTable {
     let table = Table("countries")
 
@@ -59,6 +82,69 @@ struct CountriesTable {
                     capitalColumn <- capital,
                     continentColumn <- continent)
                 try db.run(insert)
+            }
+        }
+    }
+}
+
+struct AirportsTable {
+    let table = Table("airports")
+    
+    //"Airport ID","Name","City","Country","IATA","ICAO","Latitude","Longitude","Altitude","Timezone","DST","Tz database time zone","Type","Source"
+    let nameColumn = Expression<String>("name")
+    let iataColumn = Expression<String>("iata")
+    let cityColumn = Expression<String>("city")
+    let countryColumn = Expression<String>("country")
+    
+    init(db: Connection) {
+        do {
+            try db.run(table.create() { table in
+                table.column(nameColumn)
+                table.column(iataColumn, primaryKey: true)
+                table.column(cityColumn)
+                table.column(countryColumn)
+            })
+        } catch {
+            print("Error initializing table: \(error)")
+            return
+        }
+        
+        do {
+            try loadFromCsv(db: db)
+        } catch {
+            print("Error loading from CSV: \(error)")
+        }
+    }
+    
+    func loadFromCsv(db: Connection) throws {
+        print("Loading airports from CSV.")
+        let csvFileURL = "Resources/CsvData/airports.csv"
+
+        let data = try String(contentsOfFile: csvFileURL)
+        let rows = data.components(separatedBy: "\n").dropFirst()
+
+        for row in rows {
+            let columns = parseCSVRow(row)
+            if columns.count >= 7 {
+                let id = columns[0]
+                let name = columns[1].trimmingCharacters(in: .whitespacesAndNewlines)
+                let iata = columns[4].trimmingCharacters(in: .whitespacesAndNewlines)
+                if iata == "\\N" {
+                    continue
+                }
+                let city = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
+                let country = columns[3].trimmingCharacters(in: .whitespacesAndNewlines)
+
+                let insert = table.insert(
+                    nameColumn <- name,
+                    iataColumn <- iata,
+                    cityColumn <- city,
+                    countryColumn <- country)
+                do {
+                    try db.run(insert)
+                } catch {
+                    print("Error inserting into airports \(error)\nid: \(id)\tIATA: \(iata)")
+                }
             }
         }
     }

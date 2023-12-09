@@ -14,14 +14,14 @@
         <section class="main-section search-section">
             <h2>Search for flights:</h2>
             <div class="search">
-                <form action="">
+                <form action="" hx-post="/search" hx-target="#search-results">
                     <div class="form-cell">
                         <label for="from">From</label>
-                        <input type="text" id="from">
+                        <input type="text" id="from" name="from">
                     </div>
                     <div class="form-cell">
                         <label for="to">To</label>
-                        <input type="text" id="to">
+                        <input type="text" id="to" name="to">
                     </div>
                     <div class="form-cell">
                         <label for="date">Date</label>
@@ -53,7 +53,7 @@
                             <th style="width: 30%">Buy</th>
                         </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody id="search-results"></tbody>
                     </table>
                 </div>
             </div>
@@ -62,7 +62,6 @@
 </div>
 </body>
 <script src="src/constructors/header.js"></script>
-<script src="src/constructors/flight-search.js"></script>
 <script src="src/constructors/coming-flights-widget.js"></script>
 <script src="src/script.js"></script>
 </html>

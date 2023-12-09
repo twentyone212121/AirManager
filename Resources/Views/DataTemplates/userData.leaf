@@ -1,0 +1,5 @@
+<h3>Name: <span class="name">#(user.fullName)</span> <span class="surname">Pavliuk</span></h3>
+<h3>Passport number: <span class="passport">#(user.passportNumber)</span></h3>
+<h3>Phone number: <span class="phone">#(user.phoneNumber)</span></h3>
+<h3>Email: <span class="email">#(user.email)</span></h3>
+<h3>Gender: <span class="gender">#(user.gender)</span></h3>

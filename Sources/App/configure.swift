@@ -18,9 +18,6 @@ private struct DatabaseManagerKey: StorageKey {
 
 // configures your application
 public func configure(_ app: Application) async throws {
-    // uncomment to serve files from /Public folder
-    // app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
-
     app.views.use(.leaf)
 
     // Serves files from `Public/` directory
@@ -28,6 +25,7 @@ public func configure(_ app: Application) async throws {
         publicDirectory: app.directory.publicDirectory
     )
     app.middleware.use(fileMiddleware)
+    app.middleware.use(app.sessions.middleware)
     
     app.databaseManager = DatabaseManager()
 

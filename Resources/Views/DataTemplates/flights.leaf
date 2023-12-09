@@ -1,0 +1,9 @@
+#for(flight in flights):
+    <tr>
+        <td>#(flight.fromIata)</td>
+        <td>#date(flight.fromDate)</td>
+        <td>#(flight.toIata)</td>
+        <td>#date(flight.toDate)</td>
+        <td>#(flight.number)</td>
+    </tr>
+#endfor

@@ -1,8 +1,9 @@
 import Foundation
 import Vapor
 
-struct SearchContent: Content {
-    var search: String
+struct SearchQuery: Content {
+    var from: String
+    var to: String
 }
 
 class SearchController: RouteCollection {
@@ -11,11 +12,13 @@ class SearchController: RouteCollection {
         search.post(use: aa)
     }
     
-    func aa(req: Request) async throws -> String {
-        guard let searchContent = try? req.content.decode(SearchContent.self) else {
+    func aa(req: Request) throws -> EventLoopFuture<View> {
+        guard let searchContent = try? req.content.decode(SearchQuery.self) else {
             throw Abort(.badRequest)
         }
-        return "Your params are:\n\(searchContent.search)!"
+        let flights = req.application.databaseManager.getFlights(from: searchContent.from, to: searchContent.to)
+        print("Found \(flights.count) flights.")
+        return req.view.render("DataTemplates/flights", ["flights": flights])
     }
 
 }

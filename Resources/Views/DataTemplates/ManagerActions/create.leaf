@@ -1,0 +1,38 @@
+<h2>Create new flight</h2>
+<div class="create-flights">
+    <form action="submit" hx-post="/manager/create">
+        <div class="form-cell">
+            <label for="flight-number">Flight number: </label>
+            <input type="text" id="flight-number" name="number">
+        </div>
+        <div class="form-cell">
+            <label for="from">From: </label>
+            <input type="text" id="from" name="from">
+        </div>
+        <div class="form-cell">
+            <label for="to">To: </label>
+            <input type="text" id="to" name="to">
+        </div>
+        <div class="form-cell">
+            <label for="price">Price: </label>
+            <input type="text" id="price" name="price">
+        </div>
+        <div class="form-cell">
+            <label for="date">Date: </label>
+            <input type="date" id="date" name="date">
+        </div>
+        <div class="form-cell">
+            <label for="time-from">Time from: </label>
+            <input type="time" id="time-from" name="time-from">
+        </div>
+        <div class="form-cell">
+            <label for="time-to">Time to: </label>
+            <input type="time" id="time-to" name="time-to">
+        </div>
+        <div class="form-cell">
+            <label for="seats">Free seats: </label>
+            <input type="number" id="seats" name="seats">
+        </div>
+        <button type="submit">Create</button>
+    </form>
+</div>

@@ -1,0 +1,12 @@
+<h2>Generate report</h2>
+<div class="generate-report-on form-cell">
+    <label for="report-on">Report on</label>
+    <select name="report-on" id="report-on" hx-get="/manager/report/on>
+        <option disabled selected>Select an option</option>
+        <option value="price">Passengers</option>
+        <option value="time">Fuel usage</option>
+        <option value="departure">Airport flights</option>
+        <option value="arrival">Time interval flights</option>
+    </select>
+</div>
+<div id="generate-report"></div>

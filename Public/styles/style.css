@@ -198,6 +198,10 @@ input, select {
     overflow: auto;
 }
 
+.response-container {
+    display: contents;
+}
+
 .result {
     display: flex;
     flex-direction: column;

@@ -6,6 +6,12 @@ struct SearchQuery: Content {
     var to: String
 }
 
+struct FlightsResult: Encodable {
+    let flights: [Flight]
+    let from: String
+    let to: String
+}
+
 class SearchController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let search = routes.grouped("search")
@@ -18,7 +24,6 @@ class SearchController: RouteCollection {
         }
         let flights = req.application.databaseManager.getFlights(from: searchContent.from, to: searchContent.to)
         print("Found \(flights.count) flights.")
-        return req.view.render("DataTemplates/flights", ["flights": flights])
+        return req.view.render("DataTemplates/flights", FlightsResult(flights: flights, from: "", to: ""))
     }
-
 }

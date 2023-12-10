@@ -13,12 +13,11 @@
         <section class="user-information" hx-get="/user/{id}/info">
             <div class="content">
                 <h2>My profile</h2>
-                <h3>Name: <span class="name">Alina</span> <span class="surname">Pavliuk</span></h3>
-                <h3>Passport number: <span class="passport">FX9000</span></h3>
-                <h3>Phone number: <span class="phone">+3000000000</span></h3>
-                <h3>Email: <span class="email">alino4kap12@gmail.com</span></h3>
-                <h3>Gender: <span class="gender">Female</span></h3>
-                <h3>Points: <span class="passport">1000</span></h3>
+                <h3>Name: <span>#(fullName)</span></h3>
+                <h3>Passport number: <span>#(passportNumber)</span></h3>
+                <h3>Phone number: <span>#(phoneNumber)</span></h3>
+                <h3>Email: <span>#(email)</span></h3>
+                <h3>Gender: <span>#(gender)</span></h3>
             </div>
         </section>
         <section class="user-flights">
@@ -38,23 +37,18 @@
                             <th>Ticket</th>
                         </tr>
                         </thead>
-                        <tbody hx-get="/user/{id}/flights/cur></tbody">
-                    </table>
-                </div>
-                <div class="table-wrapper">
-                    <table id="user-previous-flights-list">
-                        <thead>
-                        <tr>
-                            <th colspan="4">Previous flights:</th>
-                        </tr>
-                        <tr>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Number</th>
-                            <th>From-To</th>
-                        </tr>
-                        </thead>
-                        <tbody hx-get="/user/{id}/flights/prev"></tbody>
+                        <tbody>
+                            #for(flight in flights):
+                                <tr>
+                                    <td>#date(flight.fromDate) #date(flight.toDate)</td>
+                                    <td>#date(flight.time)</td>
+                                    <td>#(flight.number)</td>
+                                    <td>#formatDouble("%.2f", (flight.duration))</td>
+                                    <td>#formatDouble("%.2f", (flight.price))</td>
+                                    <td><a href="#" hx-get="/buy" class="table-button">Buy the ticket</a></td>
+                                </tr>
+                            #endfor
+                        </tbody">
                     </table>
                 </div>
             </div>

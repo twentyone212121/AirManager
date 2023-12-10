@@ -1,6 +1,7 @@
 <div class="filter">
-    <label for="filters">Sort by:</label>
-    <select name="filters" id="filters">
+    <label for="sort">Sort by:</label>
+    <select name="sort" id="sort">
+        <option disabled selected>Select an option</option>
         <option value="price">By price</option>
         <option value="time">By duration</option>
         <option value="departure">By departure time</option>
@@ -29,10 +30,14 @@
                         <td>#(flight.number)</td>
                         <td>#formatDouble("%.2f", (flight.duration))</td>
                         <td>#formatDouble("%.2f", (flight.price))</td>
+                        <td><a href="#" hx-get="/buy" class="table-button">Buy the ticket</a></td>
                     </tr>
                 #endfor
             </tbody>
         </table>
+        <p>
+            <input type="button" value="Print Table" onclick="myApp.printTable()" />
+        </p>
     </div>
 </div>
 

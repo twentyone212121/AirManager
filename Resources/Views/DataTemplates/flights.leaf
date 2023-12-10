@@ -7,6 +7,10 @@
         <option value="departure">By departure time</option>
         <option value="arrival">By arrival time</option>
     </select>
+    <div class="sort-order">
+        <label for="sort-order">From low to high:</label>
+        <input type="checkbox" id="sort-order" checked />
+    </div>
 </div>
 <div class="result">
     <h3>From: <span>#(from)</span> To: <span>#(to)</span></h3>
@@ -35,9 +39,6 @@
                 #endfor
             </tbody>
         </table>
-        <p>
-            <input type="button" value="Print Table" onclick="myApp.printTable()" />
-        </p>
     </div>
 </div>
 

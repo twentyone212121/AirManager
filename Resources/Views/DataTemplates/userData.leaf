@@ -1,5 +1,43 @@
-<h3>Name: <span class="name">#(user.fullName)</span> <span class="surname">Pavliuk</span></h3>
-<h3>Passport number: <span class="passport">#(user.passportNumber)</span></h3>
-<h3>Phone number: <span class="phone">#(user.phoneNumber)</span></h3>
-<h3>Email: <span class="email">#(user.email)</span></h3>
-<h3>Gender: <span class="gender">#(user.gender)</span></h3>
+<section class="user-information">
+    <div class="content">
+        <h2>My profile</h2>
+        <h3>Name: <span>#(fullName)</span></h3>
+        <h3>Passport number: <span>#(passportNumber)</span></h3>
+        <h3>Phone number: <span>#(phoneNumber)</span></h3>
+        <h3>Email: <span>#(email)</span></h3>
+        <h3>Gender: <span>#(gender)</span></h3>
+    </div>
+</section>
+<section class="user-flights">
+    <div class="content">
+        <h2>My flights</h2>
+        <div class="table-wrapper">
+            <table id="user-flights-list">
+                <thead>
+                <tr>
+                    <th colspan="5">Upcoming flights:</th>
+                </tr>
+                <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Number</th>
+                    <th>From-To</th>
+                    <th>Ticket</th>
+                </tr>
+                </thead>
+                <tbody>
+                    #for(flight in flights):
+                        <tr>
+                            <td>#date(flight.fromDate)</td>
+                            <td>#date(flight.toDate)</td>
+                            <td>#(flight.number)</td>
+                            <td>#formatDouble("%.2f", (flight.duration))</td>
+                            <td>#formatDouble("%.2f", (flight.price))</td>
+                            <td><a href="#" hx-get="/buy" class="table-button">Buy the ticket</a></td>
+                        </tr>
+                    #endfor
+                </tbody">
+            </table>
+        </div>
+    </div>
+</section>

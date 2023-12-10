@@ -75,7 +75,7 @@ class UserController: RouteCollection {
         
         print(loginData)
         let userData = try req.application.databaseManager.getUserData(loginData: loginData)
-        return req.view.render("profile", userData.self)
+        return req.view.render("DataTemplates/userData", userData.self)
     }
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {

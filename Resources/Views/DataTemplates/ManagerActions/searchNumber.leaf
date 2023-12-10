@@ -1,0 +1,10 @@
+<div class="by-number">
+    <form hx-post="/search" hx-target="#foundFlights">
+        <div class="form-cell">
+            <label for="flight-number">Flight number: </label>
+            <input type="text" id="flight-number" name="number">
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div id="foundFlights" class="response-container"></div>

@@ -1,0 +1,14 @@
+<div class="by-from-to">
+    <form hx-post="/search" hx-target="#foundFlights">
+        <div class="form-cell">
+            <label for="from">From: </label>
+            <input type="text" id="from" name="from">
+        </div>
+        <div class="form-cell">
+            <label for="to">To: </label>
+            <input type="text" id="to" name="to">
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div id="foundFlights" class="response-container"></div>

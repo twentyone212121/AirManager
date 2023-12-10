@@ -267,7 +267,7 @@ input, select {
     gap: 10px;
 }
 
-.manager-search div{
+.manager-search .form-cell{
     max-width: 300px;
 }
 

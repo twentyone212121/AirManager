@@ -329,6 +329,27 @@ struct UsersTable {
     }
 }
 
+struct ManagersTable {
+    let table = Table("managers")
+    
+    let emailColumn = Expression<String>("email")
+    let passwordColumn = Expression<String>("password")
+    let fullNameColumn = Expression<String>("fullName")
+    
+    init(db: Connection) {
+        do {
+            try db.run(table.create(ifNotExists: true) { table in
+                table.column(emailColumn, primaryKey: true)
+                table.column(passwordColumn)
+                table.column(fullNameColumn)
+            })
+        } catch {
+            print("Error initializing table: \(error)")
+            return
+        }
+    }
+}
+
 struct TicketsTable {
     let table = Table("tickets")
     

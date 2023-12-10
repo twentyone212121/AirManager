@@ -6,7 +6,6 @@ class UserController: RouteCollection {
         let user_routes = routes.grouped("user")
         user_routes.get(use: indexHandler)
         user_routes.post("register", use: registerHandler)
-        user_routes.post("data", use: getUserData)
         user_routes.get("buy", ":flightId", use: buyTicket)
         user_routes.get("info", use: getInfo)
         user_routes.post("login", use: login)
@@ -25,22 +24,9 @@ class UserController: RouteCollection {
         }
         return req.view.render("DataTemplates/confirmation", ["email": user.email])
     }
-    
-    func getUserData(_ req: Request) throws -> EventLoopFuture<View> {
-        guard let loginData = try? req.content.decode(LoginData.self) else {
-            throw Abort(.badRequest)
-        }
         
-        do {
-            let user = try req.application.databaseManager.getUserData(loginData: loginData)
-            return req.view.render("DataTemplates/userData", ["user": user])
-        } catch {
-            throw Abort(.badRequest)
-        }
-    }
-    
     func buyTicket(_ req: Request) throws -> EventLoopFuture<View> {
-        guard let token = req.cookies["token"]?.string else {
+        guard let token = req.cookies["userToken"]?.string else {
             // Token not present, user is not authenticated
             return req.eventLoop.future(error: Abort(.unauthorized))
         }
@@ -54,13 +40,12 @@ class UserController: RouteCollection {
             throw Abort(.expectationFailed)
         }
         print(flightId)
-        try req.application.databaseManager.addTicket(loginData: 
-            LoginData(email: loginData.email), flightId: flightId)
+        try req.application.databaseManager.addTicket(loginData: loginData, flightId: flightId)
         return req.view.render("DataTemplates/confirmation", ["email": "Confirmed buy"])
     }
     
     func getInfo(_ req: Request) throws -> EventLoopFuture<View> {
-        guard let token = req.cookies["token"]?.string else {
+        guard let token = req.cookies["userToken"]?.string else {
             // Token not present, user is not authenticated
             return req.eventLoop.future(error: Abort(.unauthorized))
         }
@@ -83,8 +68,12 @@ class UserController: RouteCollection {
         guard let loginData = try? req.content.decode(LoginData.self) else {
             throw Abort(.expectationFailed)
         }
-        let token = loginData.email
         
+        guard let userType = req.application.databaseManager.verifyLogin(loginData: loginData) else {
+            return req.view.render("DataTemplates/confirmation", ["email": "Incorrect login or password"]).encodeResponse(for: req)
+        }
+        
+        let token = loginData.email
         // Create an HTTP-only cookie with the token
         let cookie = HTTPCookies.Value(
             string: token,
@@ -92,9 +81,22 @@ class UserController: RouteCollection {
             isHTTPOnly: true
         )
         
-        // Set the cookie in the response
-        let response = Response(status: .ok)
-        response.cookies["token"] = cookie
-        return req.eventLoop.future(response)
+        let returnHTML: EventLoopFuture<View>
+        let cookieName: String
+        switch userType {
+        case UserType.manager:
+            cookieName = "managerToken"
+            returnHTML = req.view.render("DataTemplates/confirmation", ["email": "Confirmed manager login."])
+        case UserType.user:
+            cookieName = "userToken"
+            returnHTML = req.view.render("DataTemplates/confirmation", ["email": "Confirmed user login"])
+        }
+        
+        let response = returnHTML.encodeResponse(for: req)
+        response.whenSuccess { response in
+            response.cookies[cookieName] = cookie
+        }
+        
+        return response
     }
 }

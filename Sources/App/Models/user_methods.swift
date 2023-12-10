@@ -23,6 +23,13 @@ struct UserData: Content {
 
 struct LoginData: Content {
     let email: String
+    let password: String
+}
+
+struct Manager: Content {
+    let email: String
+    let password: String
+    let fullName: String
 }
 
 enum CreateUserError: Error {
@@ -36,9 +43,17 @@ enum UserLoginError: Error {
     case internalError
 }
 
+enum UserType: Content {
+    case user
+    case manager
+}
+
 extension DatabaseManager {
     func addUser(newUser: User) throws {
-        let query = users.table
+        let checkManagerQuery = managers.table
+            .where(managers.emailColumn == newUser.email)
+        
+        let addUserQuery = users.table
             .insert(
                 users.emailColumn <- newUser.email,
                 users.passwordColumn <- newUser.password,
@@ -48,7 +63,35 @@ extension DatabaseManager {
                 users.genderColumn <- newUser.gender)
         
         do {
-            try db.run(query)
+            let sameEmailCount = try db.scalar(checkManagerQuery.count)
+            if sameEmailCount > 0 {
+                throw CreateUserError.notUniqueEmail
+            }
+            try db.run(addUserQuery)
+        } catch let Result.error(_, code, _) where code == SQLITE_MISMATCH {
+            throw CreateUserError.invalidType
+        } catch let Result.error(_, code, _) where code == SQLITE_CONSTRAINT {
+            throw CreateUserError.notUniqueEmail
+        } catch _ {
+            throw CreateUserError.internalError
+        }
+    }
+    
+    func addManager(newManager: Manager) throws {
+        let checkQuery = users.table
+            .where(users.emailColumn == newManager.email)
+        
+        let addManagerQuery = managers.table
+            .insert(
+                managers.emailColumn <- newManager.email,
+                managers.passwordColumn <- newManager.password,
+                managers.fullNameColumn <- newManager.fullName)
+        do {
+            let sameEmailCount = try db.scalar(checkQuery.count)
+            if sameEmailCount > 0 {
+                throw CreateUserError.notUniqueEmail
+            }
+            try db.run(addManagerQuery)
         } catch let Result.error(_, code, _) where code == SQLITE_MISMATCH {
             throw CreateUserError.invalidType
         } catch let Result.error(_, code, _) where code == SQLITE_CONSTRAINT {
@@ -63,12 +106,7 @@ extension DatabaseManager {
             .where(users.table[users.emailColumn] == loginData.email)
             
         do {
-            var userRow: Row? = nil
-            for row in try db.prepare(query) {
-                userRow = row
-                break
-            }
-            guard let userRow = userRow else {
+            guard let userRow = try db.pluck(query) else {
                 throw UserLoginError.noUserFound
             }
             
@@ -95,6 +133,28 @@ extension DatabaseManager {
             print("Error getting UserData: \(error)")
             throw UserLoginError.noUserFound
         }
+    }
+    
+    func verifyLogin(loginData: LoginData) -> UserType? {
+        let verifyUserQuery = users.table
+            .where(users.emailColumn == loginData.email)
+            .where(users.passwordColumn == loginData.password)
+        
+        let verifyManagerQuery = managers.table
+            .where(managers.emailColumn == loginData.email)
+            .where(managers.passwordColumn == loginData.password)
+        
+        do {
+            if let foundUser = try db.pluck(verifyUserQuery) {
+                return UserType.user
+            }
+            if let foundManager = try db.pluck(verifyManagerQuery) {
+                return UserType.manager
+            }
+        } catch {
+            return nil
+        }
+        return nil
     }
     
 //    func getUserTickets(loginData: LoginData) throws -> [Flight] {

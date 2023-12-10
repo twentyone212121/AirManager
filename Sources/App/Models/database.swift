@@ -96,6 +96,7 @@ class DatabaseManager {
     public var users: UsersTable!
     public var tickets: TicketsTable!
     public var airplanes: AirplanesTable!
+    public var managers: ManagersTable!
     
     init() {
         do {
@@ -108,6 +109,7 @@ class DatabaseManager {
             flights = FlightsTable(db: db, airplanesNum: airplanes.amount)
           
             users = UsersTable(db: db)
+            managers = ManagersTable(db: db)
             tickets = TicketsTable(db: db)
         } catch {
             print("Error initializing database: \(error)")
@@ -236,7 +238,9 @@ class DatabaseManager {
                 let user = try db.prepare(userSearchQuery).first() { row in
                     row[users.emailColumn] == token
                 }!
-                return LoginData(email: user[users.emailColumn])
+                return LoginData(
+                    email: user[users.emailColumn],
+                    password: user[users.passwordColumn])
             } else {
                 return nil
             }

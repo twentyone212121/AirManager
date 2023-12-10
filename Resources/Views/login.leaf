@@ -11,7 +11,7 @@
     <header></header>
     <main>
         <section class="authorization">
-            <form hx-post="/login">
+            <form hx-post="/user/login">
                 <div class="form-cell">
                     <label for="email">Email</label>
                     <input id="email" type="email" name="email">

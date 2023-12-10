@@ -305,7 +305,7 @@ struct FlightsTable {
 struct UsersTable {
     let table = Table("users")
     
-    let emailColumn = Expression<String>("login")
+    let emailColumn = Expression<String>("email")
     let passwordColumn = Expression<String>("password")
     let fullNameColumn = Expression<String>("fullName")
     let passportNumberColumn = Expression<String>("passportNumber")

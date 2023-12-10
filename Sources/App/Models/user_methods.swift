@@ -10,12 +10,15 @@ struct User: Content {
     let passportNumber: String
     let phoneNumber: Int
     let gender: String
-//     let points: Int
 }
 
 struct UserData: Content {
-    let name: String
-    let flightIds: [Int]
+    let fullName: String
+    let passportNumber: String
+    let phoneNumber: Int
+    let email: String
+    let gender: String
+    let flights: [Flight]
 }
 
 struct LoginData: Content {
@@ -57,28 +60,41 @@ extension DatabaseManager {
     
     func getUserData(loginData: LoginData) throws -> UserData {
         let query = users.table
-            .where(users.emailColumn == loginData.email)
-            .join(tickets.table, on: tickets.emailColumn == users.emailColumn)
-        
+            .where(users.table[users.emailColumn] == loginData.email)
+            
         do {
-            var name: String = ""
-            var flightIds: [Int] = []
+            var userRow: Row? = nil
             for row in try db.prepare(query) {
-                name = row[users.fullNameColumn]
-                flightIds.append(row[tickets.flightIdColumn])
-//                return User(
-//                    email: row[users.emailColumn],
-//                    password: row[users.passwordColumn],
-//                    fullName: row[users.fullNameColumn],
-//                    passportNumber: row[users.passportNumberColumn],
-//                    phoneNumber: row[users.phoneNumberColumn],
-//                    gender: row[users.genderColumn])
+                userRow = row
+                break
             }
-            return UserData(name: name, flightIds: flightIds)
+            guard let userRow = userRow else {
+                throw UserLoginError.noUserFound
+            }
+            
+            let fullName = userRow[users.fullNameColumn]
+            let passportNumber = userRow[users.passportNumberColumn]
+            let phoneNumber = userRow[users.phoneNumberColumn]
+            let email = userRow[users.emailColumn]
+            let gender = userRow[users.genderColumn]
+            
+            let flightsQuery = query
+                .join(tickets.table, on: tickets.table[tickets.emailColumn] == users.table[users.emailColumn])
+                .join(flights.table, on:
+                tickets.table[tickets.flightIdColumn] == flights.table[flights.idColumn])
+            let flightsReturned = getFlightsFromQueries(queries: [flightsQuery])
+            
+            return UserData(
+                fullName: fullName,
+                passportNumber: passportNumber,
+                phoneNumber: phoneNumber,
+                email: email,
+                gender: gender,
+                flights: flightsReturned)
         } catch {
-            throw UserLoginError.internalError
+            print("Error getting UserData: \(error)")
+            throw UserLoginError.noUserFound
         }
-        throw UserLoginError.noUserFound
     }
     
 //    func getUserTickets(loginData: LoginData) throws -> [Flight] {

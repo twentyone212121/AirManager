@@ -149,6 +149,10 @@ class DatabaseManager {
         }
         
         let queries = [queryIata, queryCity]
+        return getFlightsFromQueries(queries: queries)
+    }
+    
+    func getFlightsFromQueries(queries: [QueryType]) -> [Flight] {
         var result: [Flight] = []
         do {
             for query in queries {
@@ -211,6 +215,29 @@ class DatabaseManager {
                     tickets.emailColumn <- loginData.email)
             try db.run(insertStatement)
         }
+    }
+    
+    func validateTokenAndGetUser(token: String) -> LoginData? {
+        do {
+            let userExists = try db.scalar(users.table
+                .filter(users.table[users.emailColumn] == token)
+                .count) > 0
+        
+            if userExists {
+                // If the user exists, return the whole user column
+                let userSearchQuery = users.table
+                    .filter(users.table[users.emailColumn] == token)
+                let user = try db.prepare(userSearchQuery).first() { row in
+                    row[users.emailColumn] == token
+                }!
+                return LoginData(email: user[users.emailColumn])
+            } else {
+                return nil
+            }
+        } catch {
+            return nil
+        }
+        
     }
 }
 

@@ -8,7 +8,8 @@ class UserController: RouteCollection {
         user_routes.post("register", use: registerHandler)
         user_routes.post("data", use: getUserData)
         user_routes.post("buy", use: buyTicket)
-        user_routes.post("info", use: getInfo)
+        user_routes.get("info", use: getInfo)
+        user_routes.post("login", use: login)
     }
     
     func registerHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -40,28 +41,63 @@ class UserController: RouteCollection {
     
     func buyTicket(_ req: Request) throws -> EventLoopFuture<View> {
         struct BuyData: Content {
-            let email: String
             let flightId: Int
+        }
+        
+        guard let token = req.cookies["token"]?.string else {
+            // Token not present, user is not authenticated
+            return req.eventLoop.future(error: Abort(.unauthorized))
+        }
+        
+        // Validate the token and get the associated user
+        guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: token) else {
+            throw Abort(.unauthorized)
         }
         
         guard let buyData = try? req.content.decode(BuyData.self) else {
             throw Abort(.expectationFailed)
         }
         print(buyData)
-        try req.application.databaseManager.addTicket(loginData: LoginData(email: buyData.email), flightId: buyData.flightId)
+        try req.application.databaseManager.addTicket(loginData: LoginData(email: loginData.email), flightId: buyData.flightId)
         return req.view.render("DataTemplates/confirmation", ["email": "Confirmed buy"])
     }
     
     func getInfo(_ req: Request) throws -> EventLoopFuture<View> {
-        guard let loginData = try? req.content.decode(LoginData.self) else {
-            throw Abort(.expectationFailed)
+        guard let token = req.cookies["token"]?.string else {
+            // Token not present, user is not authenticated
+            return req.eventLoop.future(error: Abort(.unauthorized))
         }
+        
+        // Validate the token and get the associated user
+        guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: token) else {
+            throw Abort(.unauthorized)
+        }
+        
         print(loginData)
         let userData = try req.application.databaseManager.getUserData(loginData: loginData)
-        return req.view.render("DataTemplates/user", userData.self)
+        return req.view.render("profile", userData.self)
     }
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {
         return req.view.render("profile")
+    }
+    
+    func login(_ req: Request) throws -> EventLoopFuture<Response> {
+        guard let loginData = try? req.content.decode(LoginData.self) else {
+            throw Abort(.expectationFailed)
+        }
+        let token = loginData.email
+        
+        // Create an HTTP-only cookie with the token
+        let cookie = HTTPCookies.Value(
+            string: token,
+            expires: Date(timeIntervalSinceNow: 3600), // Set an expiration time
+            isHTTPOnly: true
+        )
+        
+        // Set the cookie in the response
+        let response = Response(status: .ok)
+        response.cookies["token"] = cookie
+        return req.eventLoop.future(response)
     }
 }

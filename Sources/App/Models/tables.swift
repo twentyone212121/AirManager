@@ -150,6 +150,57 @@ struct AirportsTable {
     }
 }
 
+struct AirplanesTable {
+    let table = Table("airplanes")
+    
+    let idColumn = Expression<Int>("id")
+    let modelColumn = Expression<String>("model")
+    let fuelConsumptionColumn = Expression<Int>("fuelConsumption")
+    
+    var amount: Int = 21
+    
+    init(db: Connection) {
+        do {
+            try db.run(table.create() { table in
+                table.column(idColumn, primaryKey: .autoincrement)
+                table.column(modelColumn)
+                table.column(fuelConsumptionColumn)
+            })
+        } catch {
+            print("Error initializing table: \(error)")
+            return
+        }
+        
+        do {
+            try loadFromCsv(db: db)
+        } catch {
+            print("Error loading from CSV: \(error)")
+        }
+    }
+    
+    func loadFromCsv(db: Connection) throws {
+        print("Loading airplanes from CSV.")
+        let csvFileURL = "Resources/CsvData/airplanes.csv"
+
+        let data = try String(contentsOfFile: csvFileURL)
+        let rows = data.components(separatedBy: "\n").dropFirst()
+
+        for row in rows {
+            let columns = parseCSVRow(row)
+            if columns.count >= 2 {
+                let model = columns[0].trimmingCharacters(in: .whitespacesAndNewlines)
+                let fuelConsumption = Int(columns[1].trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
+
+                let insert = table.insert(
+                    modelColumn <- model,
+                    fuelConsumptionColumn <- fuelConsumption)
+                
+                try db.run(insert)
+            }
+        }
+    }
+}
+
 struct FlightsTable {
     let table = Table("flights")
 
@@ -165,8 +216,9 @@ struct FlightsTable {
     let durationColumn = Expression<Double>("duration")
     let freeSeatsColumn = Expression<Int>("freeSeats")
     let priceColumn = Expression<Double>("price")
+    let airplaneIdColumn = Expression<Int>("airplaneId")
     
-    init(db: Connection) {
+    init(db: Connection, airplanesNum: Int) {
         do {
 //            try db.run(table.drop(ifExists: true))
             try db.run(table.create() { table in
@@ -181,6 +233,7 @@ struct FlightsTable {
                 table.column(durationColumn)
                 table.column(freeSeatsColumn)
                 table.column(priceColumn)
+                table.column(airplaneIdColumn)
             })
         } catch {
             print("Error initializing table: \(error)")
@@ -188,13 +241,13 @@ struct FlightsTable {
         }
         
         do {
-            try loadFromCsv(db: db)
+            try loadFromCsv(db: db, airplanesNum)
         } catch {
             print("Error loading from CSV: \(error)")
         }
     }
     
-    func loadFromCsv(db: Connection) throws {
+    func loadFromCsv(db: Connection, _ airplanesNum: Int) throws {
         print("Loading from CSV.")
         let csvFileURL = "Resources/CsvData/flights.csv"
 
@@ -239,7 +292,8 @@ struct FlightsTable {
                     flightNumberColumn <- flightNumber,
                     durationColumn <- duration,
                     freeSeatsColumn <- freeSeats,
-                    priceColumn <- price
+                    priceColumn <- price,
+                    airplaneIdColumn <- Int.random(in: 1..<(airplanesNum+1))
                 )
                 try db.run(insert)
             }
@@ -276,15 +330,15 @@ struct UsersTable {
 }
 
 struct TicketsTable {
-    let table = Table("users")
+    let table = Table("tickets")
     
-    let loginColumn = Expression<String>("login")
+    let emailColumn = Expression<String>("email")
     let flightIdColumn = Expression<Int>("flightId")
     
     init(db: Connection) {
         do {
             try db.run(table.create(ifNotExists: true) { table in
-                table.column(loginColumn)
+                table.column(emailColumn)
                 table.column(flightIdColumn)
             })
         } catch {

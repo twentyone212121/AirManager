@@ -24,11 +24,11 @@
             <tbody>
                 #for(flight in flights):
                     <tr>
-                        <td>#(flight.fromIata)</td>
                         <td>#date(flight.fromDate)</td>
-                        <td>#(flight.toIata)</td>
                         <td>#date(flight.toDate)</td>
                         <td>#(flight.number)</td>
+                        <td>#formatDouble("%.2f", (flight.duration))</td>
+                        <td>#formatDouble("%.2f", (flight.price))</td>
                     </tr>
                 #endfor
             </tbody>

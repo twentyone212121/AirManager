@@ -13,6 +13,11 @@ struct User: Content {
 //     let points: Int
 }
 
+struct UserData: Content {
+    let name: String
+    let flightIds: [Int]
+}
+
 struct LoginData: Content {
     let email: String
 }
@@ -50,37 +55,30 @@ extension DatabaseManager {
         }
     }
     
-    func getUserData(loginData: LoginData) throws -> User {
+    func getUserData(loginData: LoginData) throws -> UserData {
         let query = users.table
             .where(users.emailColumn == loginData.email)
+            .join(tickets.table, on: tickets.emailColumn == users.emailColumn)
         
         do {
+            var name: String = ""
+            var flightIds: [Int] = []
             for row in try db.prepare(query) {
-                return User(
-                    email: row[users.emailColumn],
-                    password: row[users.passwordColumn],
-                    fullName: row[users.fullNameColumn],
-                    passportNumber: row[users.passportNumberColumn],
-                    phoneNumber: row[users.phoneNumberColumn],
-                    gender: row[users.genderColumn])
+                name = row[users.fullNameColumn]
+                flightIds.append(row[tickets.flightIdColumn])
+//                return User(
+//                    email: row[users.emailColumn],
+//                    password: row[users.passwordColumn],
+//                    fullName: row[users.fullNameColumn],
+//                    passportNumber: row[users.passportNumberColumn],
+//                    phoneNumber: row[users.phoneNumberColumn],
+//                    gender: row[users.genderColumn])
             }
+            return UserData(name: name, flightIds: flightIds)
         } catch {
             throw UserLoginError.internalError
         }
         throw UserLoginError.noUserFound
-    }
-    
-    func userAddTicket(loginData: LoginData, flightId: Int) throws {
-        let query = tickets.table
-            .insert(
-                tickets.loginColumn <- loginData.email,
-                tickets.flightIdColumn <- flightId)
-        
-        do {
-            try db.run(query)
-        } catch let Result.error(_, code, _) where code == SQLITE_MISMATCH {
-            throw CreateUserError.invalidType
-        }
     }
     
 //    func getUserTickets(loginData: LoginData) throws -> [Flight] {

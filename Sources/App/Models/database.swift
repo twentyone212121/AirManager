@@ -2,30 +2,84 @@ import Foundation
 import SQLite
 import Vapor
 
-struct Flight: Content {
+struct Flight: Content, Decodable {
     var date: String
     let fromIata: String
-    let fromDate: Date
+    var fromDate: Date
     let toIata: String
-    let toDate: Date
+    var toDate: Date
     var duration: Double
     let freeSeats: Int
     let number: Int
     let price: Double
     
-    mutating func afterDecode() throws {
-        // Check if date is not provided, generate a default date (e.g., today)
-        if self.date.isEmpty {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
-            self.date = dateFormatter.string(from: self.fromDate)
-        }
-
-        // Check if duration is not provided, calculate it based on fromDate and toDate
-        if self.duration == 0 {
-            self.duration = self.toDate.timeIntervalSince(self.fromDate) / 3600 // Duration in hours
-        }
+    enum CodingKeys: String, CodingKey {
+        case fromIata
+        case fromDate
+        case toIata
+        case toDate
+        case freeSeats
+        case number
+        case price
+        case duration
     }
+    
+    init(date: String, fromIata: String, fromDate: Date, toIata: String, toDate: Date, duration: Double, freeSeats: Int, number: Int, price: Double) {
+        self.date = date
+        self.fromIata = fromIata
+        self.fromDate = fromDate
+        self.toIata = toIata
+        self.toDate = toDate
+        self.duration = duration
+        self.freeSeats = freeSeats
+        self.number = number
+        self.price = price
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.fromIata = try container.decode(String.self, forKey: .fromIata)
+        self.toIata = try container.decode(String.self, forKey: .toIata)
+        self.freeSeats = try container.decode(Int.self, forKey: .freeSeats)
+        self.number = try container.decode(Int.self, forKey: .number)
+        self.price = try container.decode(Double.self, forKey: .price)
+        
+        self.fromDate = Date()
+        self.toDate = Date()
+        self.date = ""
+        self.duration = 0.0
+        
+        let fromDateString = try container.decode(String.self, forKey: .fromDate)
+        if let fromDate = decodeDate(from: fromDateString) {
+            self.fromDate = fromDate
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .fromDate, in: container, debugDescription: "Invalid date format")
+        }
+        
+        let toDateString = try container.decode(String.self, forKey: .toDate)
+        if let toDate = decodeDate(from: toDateString) {
+            self.toDate = toDate
+        } else {
+            throw DecodingError.dataCorruptedError(forKey: .toDate, in: container, debugDescription: "Invalid date format")
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        self.date = dateFormatter.string(from: self.fromDate)
+        self.duration = self.toDate.timeIntervalSince(self.fromDate) / 3600
+    }
+
+    private func decodeDate(from dateString: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        return dateFormatter.date(from: dateString)
+    }
+}
+
+enum DatabaseError: Error {
+    case incorrectArguments
+    case interalMalfunction
 }
 
 class DatabaseManager {
@@ -36,16 +90,20 @@ class DatabaseManager {
     public var flights: FlightsTable!
     public var users: UsersTable!
     public var tickets: TicketsTable!
+    public var airplanes: AirplanesTable!
     
     init() {
         do {
             let path = "Resources/airmanager.sqlite3"
             db = try Connection(path)
             countries = CountriesTable(db: db)
-            flights = FlightsTable(db: db)
+            airports = AirportsTable(db: db)
+            airplanes = AirplanesTable(db: db)
+            
+            flights = FlightsTable(db: db, airplanesNum: airplanes.amount)
+          
             users = UsersTable(db: db)
             tickets = TicketsTable(db: db)
-            airports = AirportsTable(db: db)
         } catch {
             print("Error initializing database: \(error)")
         }
@@ -67,35 +125,45 @@ class DatabaseManager {
     }
     
     func getFlights(from: String, to: String) -> [Flight] {
-        let query: QueryType
-        if from.count == 3 && to.count == 3 {
-             query = flights.table
-                .where(flights.departureIataColumn == from &&
-                       flights.arrivalIataColumn == to)
-        } else {
-            let departureAirport = airports.table.alias("departureAirport")
-            let arrivalAirport = airports.table.alias("arrivalAirport")
-            query = flights.table
-                .join(departureAirport, on: flights.departureIataColumn == departureAirport[airports.iataColumn])
-                .join(arrivalAirport, on: flights.arrivalIataColumn == arrivalAirport[airports.iataColumn])
-                .filter(departureAirport[airports.cityColumn] == from)
-                .filter(arrivalAirport[airports.cityColumn] == to)
-                .select(flights.table[*])
+        var queryIata: QueryType
+        queryIata = flights.table
+        if !from.isEmpty {
+            queryIata = queryIata.where(flights.departureIataColumn == from)
         }
-                
+        if !to.isEmpty {
+            queryIata = queryIata.where(flights.arrivalIataColumn == to)
+        }
+        
+        var queryCity: QueryType
+        let departureAirport = airports.table.alias("departureAirport")
+        let arrivalAirport = airports.table.alias("arrivalAirport")
+        queryCity = flights.table
+            .join(departureAirport, on: flights.departureIataColumn == departureAirport[airports.iataColumn])
+            .join(arrivalAirport, on: flights.arrivalIataColumn == arrivalAirport[airports.iataColumn])
+        
+        if !from.isEmpty {
+            queryCity = queryCity.filter(departureAirport[airports.cityColumn] == from)
+        }
+        if !to.isEmpty {
+            queryCity = queryCity.filter(arrivalAirport[airports.cityColumn] == to)
+        }
+        
+        let queries = [queryIata, queryCity]
         var result: [Flight] = []
         do {
-            for flight in try db.prepare(query) {
-                result.append(Flight(
-                    date: flight[flights.dateColumn],
-                    fromIata: flight[flights.departureIataColumn],
-                    fromDate: flight[flights.departureScheduledColumn],
-                    toIata: flight[flights.arrivalIataColumn],
-                    toDate: flight[flights.arrivalScheduledColumn],
-                    duration: flight[flights.durationColumn],
-                    freeSeats: flight[flights.freeSeatsColumn],
-                    number: flight[flights.flightNumberColumn],
-                    price: flight[flights.priceColumn]))
+            for query in queries {
+                for flight in try db.prepare(query) {
+                    result.append(Flight(
+                        date: flight[flights.dateColumn],
+                        fromIata: flight[flights.departureIataColumn],
+                        fromDate: flight[flights.departureScheduledColumn],
+                        toIata: flight[flights.arrivalIataColumn],
+                        toDate: flight[flights.arrivalScheduledColumn],
+                        duration: flight[flights.durationColumn],
+                        freeSeats: flight[flights.freeSeatsColumn],
+                        number: flight[flights.flightNumberColumn],
+                        price: flight[flights.priceColumn]))
+                }
             }
         } catch {}
         return result
@@ -105,6 +173,7 @@ class DatabaseManager {
         let query = flights.table
             .insert(
                 flights.dateColumn <- flight.date,
+                flights.statusColumn <- "scheduled",
                 flights.priceColumn <- flight.price,
                 flights.durationColumn <- flight.duration,
                 flights.freeSeatsColumn <- flight.freeSeats,
@@ -117,22 +186,31 @@ class DatabaseManager {
         try db.run(query)
     }
     
-//    func getUsers() -> [String: Int] {
-//        var result: [String: Int] = [:]
-//
-//        do {
-//            let usersTable = Table("users")
-//            let name = Expression<String>("name")
-//            let age = Expression<Int>("age")
-//
-//            for user in try db.prepare(usersTable) {
-//                result[user[name]] = user[age]
-//            }
-//        } catch {
-//            print("Error retrieving users: \(error)")
-//        }
-//
-//        return result
-//    }
+    func addTicket(loginData: LoginData, flightId: Int) throws {
+        try db.transaction {
+            // Check if there are available seats
+            let availableSeats = try db.scalar(flights.table
+                .filter(flights.idColumn == flightId)
+                .select(flights.freeSeatsColumn)
+            )
+            if availableSeats <= 0 {
+                throw DatabaseError.incorrectArguments
+            }
+
+            // Decrement freeSeatsColumn
+            let updatedSeats = availableSeats - 1
+            let updateStatement = flights.table
+                .filter(flights.idColumn == flightId)
+                .update(flights.freeSeatsColumn <- updatedSeats)
+            try db.run(updateStatement)
+
+            // Add a new row to the tickets table
+            let insertStatement = tickets.table
+                .insert(
+                    tickets.flightIdColumn <- flightId,
+                    tickets.emailColumn <- loginData.email)
+            try db.run(insertStatement)
+        }
+    }
 }
 

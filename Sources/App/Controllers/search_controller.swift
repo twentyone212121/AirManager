@@ -24,6 +24,6 @@ class SearchController: RouteCollection {
         }
         let flights = req.application.databaseManager.getFlights(from: searchContent.from, to: searchContent.to)
         print("Found \(flights.count) flights.")
-        return req.view.render("DataTemplates/flights", FlightsResult(flights: flights, from: "", to: ""))
+        return req.view.render("DataTemplates/flights", ["flights": flights])
     }
 }

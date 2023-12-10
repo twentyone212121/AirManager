@@ -36,8 +36,12 @@ final class ManagerController: RouteCollection {
     }
 
      func createHandler(_ req: Request) throws -> EventLoopFuture<View> {
+         do {
+             try req.content.decode(Flight.self)
+         } catch {
+             print("Error decoding Flight: \(error)")
+         }
         guard let flight = try? req.content.decode(Flight.self) else {
-            print(req.content)
             throw Abort(.badRequest)
         }
 
@@ -45,6 +49,7 @@ final class ManagerController: RouteCollection {
         do {
             try req.application.databaseManager.addFlight(flight: flight)
         } catch {
+            print("Error adding to the database: \(error)")
             throw Abort(.badRequest)
         }
         return req.view.render("DataTemplates/confirmation", ["email": "beba"])

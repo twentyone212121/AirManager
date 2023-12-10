@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <header></header>
+    <header hx-get="/header"></header>
     <main class="profile-main" hx-get="/user/info" hx-trigger="load"</main>
 </div>
 <script src="src/constructors/header.js"></script>

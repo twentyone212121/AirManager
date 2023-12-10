@@ -1,0 +1,8 @@
+<a href="/">AirManager</a>
+<nav>
+    <ul>
+        <li><a href="/profile">My profile</a></li>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/" hx-get="/logout">Log out</a></li>
+    </ul>
+</nav>

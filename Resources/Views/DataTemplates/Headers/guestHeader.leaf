@@ -1,0 +1,8 @@
+<a href="/">AirManager</a>
+<nav>
+    <ul>
+        <li><a href="/search">Search</a></li>
+        <li><a href="/login">Sign in</a></li>
+        <li><a href="/register">Sign up</a></li>
+    </ul>
+</nav>

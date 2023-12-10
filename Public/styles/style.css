@@ -136,6 +136,14 @@ input, select {
     box-sizing:content-box;
 }
 
+.sort-order {
+    margin-top: 10px;
+}
+
+.sort-order input {
+    min-width: unset;
+}
+
 .coming-flights-widget {
     border-radius: 15px;
     margin: 10px;

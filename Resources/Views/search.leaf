@@ -23,10 +23,6 @@
                         <label for="to">To</label>
                         <input type="text" id="to" name="to">
                     </div>
-                    <div class="form-cell">
-                        <label for="date">Date</label>
-                        <input type="date" id="date">
-                    </div>
                     <button type="submit">Search</button>
                 </form>
             </div>
@@ -37,5 +33,6 @@
 </body>
 <script src="src/constructors/header.js"></script>
 <script src="src/constructors/coming-flights-widget.js"></script>
+<script src="src/functions/sort-search.js"></script>
 <script src="src/script.js"></script>
 </html>

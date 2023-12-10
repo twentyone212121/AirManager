@@ -18,31 +18,26 @@
         <table id="found-flights">
             <thead>
             <tr>
-                <th style="width: 10%" id="departure">Departure time</th>
-                <th style="width: 10%">Departure airport</th>
-                <th style="width: 10%" id="arrival">Arrival time</th>
-                <th style="width: 10%">Arrival airport</th>
                 <th style="width: 10%">Number</th>
-                <th style="width: 10%" id="duration">Duration</th>
-                <th style="width: 10%" id="price">Price</th>
-                <th style="width: 30%">Buy</th>
+                <th style="width: 15%">From/To</th>
+                <th style="width: 15%">Departure time</th>
+                <th style="width: 15%">Arrival time</th>
+                <th style="width: 15%">Price</th>
+                <th style="width: 30%">Change</th>
             </tr>
             </thead>
             <tbody>
                 #for(flight in flights):
                     <tr>
-                        <td>#date(flight.fromDate, "HH:mm")</td>
-                        <td>#(flight.fromIata)</td>
-                        <td>#date(flight.toDate, "HH:mm")</td>
-                        <td>#(flight.toIata)</td>
                         <td>#(flight.number)</td>
-                        <td>#formatDouble("%.2f", (flight.duration))</td>
+                        <td>#(flight.fromIata)-#(flight.toIata)</td>
+                        <td>#date(flight.fromDate)</td>
+                        <td>#date(flight.toDate)</td>
                         <td>#formatDouble("%.2f", (flight.price))</td>
-                        <td><a href="#" hx-get="/user/buy/#(flight.flightId)" class="table-button">Buy the ticket</a></td>
+                        <td><a href="#" hx-get="/manager/change/changeInput" class="table-button">Change</a></td>
                     </tr>
                 #endfor
             </tbody>
         </table>
     </div>
 </div>
-

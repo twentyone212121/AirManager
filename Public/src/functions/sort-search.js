@@ -1,3 +1,22 @@
+function getThIndexById(tableId, thId) {
+    let table = document.getElementById(tableId);
+    let headers = table.getElementsByTagName('th');
+
+    for (var i = 0; i < headers.length; i++) {
+        if (headers[i].id === thId) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+function convertToMinutes(timeString) {
+    let timeParts = timeString.split(":");
+    let hours = parseInt(timeParts[0], 10);
+    let minutes = parseInt(timeParts[1], 10);
+    return hours * 60 + minutes;
+}
+
 function readTableValues() {
     let table = document.getElementById("found-flights");
     let tableValues = [];
@@ -37,8 +56,9 @@ function displayTable(tableValues) {
 
 function sortByPrice(values, order) {
     values.sort(function(a, b) {
-        let priceA = parseInt(a[4]);
-        let priceB = parseInt(b[4]);
+        let index = getThIndexById('found-flights', 'price')
+        let priceA = parseInt(a[index]);
+        let priceB = parseInt(b[index]);
 
         return order * (priceA - priceB);
     });
@@ -47,8 +67,9 @@ function sortByPrice(values, order) {
 
 function sortByTime(values, order) {
     values.sort(function(a, b) {
-        let durationA = parseFloat(a[3]);
-        let durationB = parseFloat(b[3]);
+        let index = getThIndexById('found-flights', 'duration')
+        let durationA = parseFloat(a[index]);
+        let durationB = parseFloat(b[index]);
 
         return order * (durationA - durationB);
     });
@@ -57,8 +78,9 @@ function sortByTime(values, order) {
 
 function sortByDeparture(values, order) {
     values.sort(function(a, b) {
-        let dateA = a[0];
-        let dateB = b[0];
+        let index = getThIndexById('found-flights', 'departure')
+        let dateA = convertToMinutes(a[index]);
+        let dateB = convertToMinutes(b[index]);
 
         return order * (dateA - dateB);
     });
@@ -67,8 +89,9 @@ function sortByDeparture(values, order) {
 
 function sortByArrival(values, order) {
     values.sort(function(a, b) {
-        let dateA = parseInt(a[1]);
-        let dateB = parseInt(b[1]);
+        let index = getThIndexById('found-flights', 'arrival')
+        let dateA = convertToMinutes(a[index]);
+        let dateB = convertToMinutes(b[index]);
 
         return order * (dateA - dateB);
     });

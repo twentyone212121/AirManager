@@ -15,6 +15,7 @@ struct Flight: Content, Decodable {
     let flightId: Int
     
     enum CodingKeys: String, CodingKey {
+        case date
         case fromIata
         case fromDate
         case toIata
@@ -128,7 +129,7 @@ class DatabaseManager {
         return nil
     }
     
-    func getFlights(from: String, to: String) -> [Flight] {
+    func getFlights(from: inout String, to: inout String) -> [Flight] {
         var queryIata: QueryType
         queryIata = flights.table
         if !from.isEmpty {

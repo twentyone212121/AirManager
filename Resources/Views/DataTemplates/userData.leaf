@@ -15,7 +15,7 @@
             <table id="user-flights-list">
                 <thead>
                 <tr>
-                    <th colspan="5">Upcoming flights:</th>
+                    <th colspan="5">Bought tickets:</th>
                 </tr>
                 <tr>
                     <th>Date</th>
@@ -28,12 +28,11 @@
                 <tbody>
                     #for(flight in flights):
                         <tr>
-                            <td>#date(flight.fromDate)</td>
-                            <td>#date(flight.toDate)</td>
+                            <td>#(flight.date)</td>
+                            <td>#date(flight.fromDate, "HH:mm") - #date(flight.toDate, "HH:mm")</td>
                             <td>#(flight.number)</td>
-                            <td>#formatDouble("%.2f", (flight.duration))</td>
-                            <td>#formatDouble("%.2f", (flight.price))</td>
-                            <td><a href="#" hx-get="/buy" class="table-button">Buy the ticket</a></td>
+                            <td>#(flight.fromIata) - #(flight.toIata)</td>
+                            <td><a href="" class="table-button">Print the ticket</a></td>
                         </tr>
                     #endfor
                 </tbody">

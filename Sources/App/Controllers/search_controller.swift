@@ -19,11 +19,23 @@ class SearchController: RouteCollection {
     }
     
     func aa(req: Request) throws -> EventLoopFuture<View> {
+        struct FlightsTemplateParams: Encodable {
+            let flights: [Flight]
+            let from: String
+            let to: String
+        }
+        
         guard let searchContent = try? req.content.decode(SearchQuery.self) else {
             throw Abort(.badRequest)
         }
-        let flights = req.application.databaseManager.getFlights(from: searchContent.from, to: searchContent.to)
+        
+        var from = searchContent.from
+        var to = searchContent.to
+        let flights = req.application.databaseManager.getFlights(from: &from, to: &to)
         print("Found \(flights.count) flights.")
-        return req.view.render("DataTemplates/flights", ["flights": flights])
+        
+        return req.view.render("DataTemplates/flights", FlightsTemplateParams(
+            flights: flights, from: from, to: to))
+        
     }
 }

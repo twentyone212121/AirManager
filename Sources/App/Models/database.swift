@@ -12,6 +12,7 @@ struct Flight: Content, Decodable {
     let freeSeats: Int
     let number: Int
     let price: Double
+    let flightId: Int
     
     enum CodingKeys: String, CodingKey {
         case fromIata
@@ -22,9 +23,10 @@ struct Flight: Content, Decodable {
         case number
         case price
         case duration
+        case flightId
     }
     
-    init(date: String, fromIata: String, fromDate: Date, toIata: String, toDate: Date, duration: Double, freeSeats: Int, number: Int, price: Double) {
+    init(date: String, fromIata: String, fromDate: Date, toIata: String, toDate: Date, duration: Double, freeSeats: Int, number: Int, price: Double, flightId: Int) {
         self.date = date
         self.fromIata = fromIata
         self.fromDate = fromDate
@@ -34,6 +36,7 @@ struct Flight: Content, Decodable {
         self.freeSeats = freeSeats
         self.number = number
         self.price = price
+        self.flightId = flightId
     }
     
     init(from decoder: Decoder) throws {
@@ -49,6 +52,7 @@ struct Flight: Content, Decodable {
         self.toDate = Date()
         self.date = ""
         self.duration = 0.0
+        self.flightId = -1
         
         let fromDateString = try container.decode(String.self, forKey: .fromDate)
         if let fromDate = decodeDate(from: fromDateString) {
@@ -166,7 +170,8 @@ class DatabaseManager {
                         duration: flight[flights.durationColumn],
                         freeSeats: flight[flights.freeSeatsColumn],
                         number: flight[flights.flightNumberColumn],
-                        price: flight[flights.priceColumn]))
+                        price: flight[flights.priceColumn],
+                        flightId: flight[flights.idColumn]))
                 }
             }
         } catch {}

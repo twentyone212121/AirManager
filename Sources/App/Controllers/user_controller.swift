@@ -7,7 +7,7 @@ class UserController: RouteCollection {
         user_routes.get(use: indexHandler)
         user_routes.post("register", use: registerHandler)
         user_routes.post("data", use: getUserData)
-        user_routes.post("buy", use: buyTicket)
+        user_routes.get("buy", ":flightId", use: buyTicket)
         user_routes.get("info", use: getInfo)
         user_routes.post("login", use: login)
     }
@@ -40,10 +40,6 @@ class UserController: RouteCollection {
     }
     
     func buyTicket(_ req: Request) throws -> EventLoopFuture<View> {
-        struct BuyData: Content {
-            let flightId: Int
-        }
-        
         guard let token = req.cookies["token"]?.string else {
             // Token not present, user is not authenticated
             return req.eventLoop.future(error: Abort(.unauthorized))
@@ -54,11 +50,12 @@ class UserController: RouteCollection {
             throw Abort(.unauthorized)
         }
         
-        guard let buyData = try? req.content.decode(BuyData.self) else {
+        guard let flightId = Int(req.parameters.get("flightId")!) else {
             throw Abort(.expectationFailed)
         }
-        print(buyData)
-        try req.application.databaseManager.addTicket(loginData: LoginData(email: loginData.email), flightId: buyData.flightId)
+        print(flightId)
+        try req.application.databaseManager.addTicket(loginData: 
+            LoginData(email: loginData.email), flightId: flightId)
         return req.view.render("DataTemplates/confirmation", ["email": "Confirmed buy"])
     }
     

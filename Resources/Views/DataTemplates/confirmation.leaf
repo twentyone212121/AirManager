@@ -1,1 +1,6 @@
-<p>You are successfully registered under email #(email).</p>
+<div class="alert-container">
+    <div class="alert #(type)">
+        <a href=#(to)><span class="closebtn" onclick="{document.querySelector('.alert-container').remove();}">&times;</span></a>
+        #(text)
+    </div>
+</div>

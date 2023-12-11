@@ -1,0 +1,10 @@
+<div class="by-number">
+    <form hx-post="/search" hx-target="#toPrint">
+        <div class="form-cell">
+            <label for="airport">Airport: </label>
+            <input type="text" id="airport" name="airport">
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div id="toPrint"></div>

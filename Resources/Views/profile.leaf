@@ -8,10 +8,60 @@
 </head>
 <body>
 <div class="wrapper">
-    <header hx-get="/header"></header>
-    <main class="profile-main" hx-get="/user/info" hx-trigger="load"</main>
+    <header hx-get="/header" hx-trigger="load"></header>
+    <main class="profile-main" hx-get="/user/info" hx-trigger="load"></main>
 </div>
-<script src="src/constructors/header.js"></script>
+<script>
+    function printTicket(element) {
+        // Define the styles for better print layout
+        let style = "<style>";
+        style += "body {font-family: Arial, sans-serif;}";
+        style += "table {width: 100%; border-collapse: collapse;}";
+        style += "th, td {border: 1px solid #ddd; padding: 8px; text-align: left;}";
+        style += "th {background-color: #f2f2f2;}";
+        style += "img {width: 200px}";
+        style += "</style>";
+
+        // Get the data from the original table
+        let name = document.getElementById("name").innerHTML;
+        let headings = document.getElementById("headings");
+        let row = element.closest('tr');
+
+        // Create a new table for printing
+        let printTable = document.createElement('table');
+        printTable.innerHTML = headings.outerHTML + row.outerHTML;
+
+        let lastHeading = printTable.lastElementChild.querySelector('th:last-child');
+        lastHeading.parentNode.removeChild(lastHeading);
+
+        let lastCell = printTable.lastElementChild.querySelector('td:last-child');
+        lastCell.parentNode.removeChild(lastCell);
+
+        let printHeadings = printTable.firstElementChild.firstElementChild;
+        let printRow = printTable.firstElementChild.lastElementChild;
+
+        let nameHeading = document.createElement('th');
+        nameHeading.textContent = 'Name';
+        printHeadings.insertBefore(nameHeading, printHeadings.firstElementChild);
+
+        let nameCell = document.createElement('td');
+        nameCell.textContent = name;
+        printRow.insertBefore(nameCell, printRow.firstElementChild);
+
+        // Open a new window
+        let win = window.open('', '', 'height=900,width=700');
+
+        // Write styles and HTML content to the new window
+        win.document.write(style);
+        win.document.write(printTable.outerHTML);
+        win.document.write('<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/2048px-QR_code_for_mobile_English_Wikipedia.svg.png">');
+        win.document.close();
+
+        // Open the print dialog
+        win.print();
+    }
+
+</script>
 <script src="src/script.js"></script>
 </body>
 </html>

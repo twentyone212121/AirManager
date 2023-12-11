@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="wrapper">
-    <header hx-get="/header"></header>
+    <header hx-get="/header" hx-trigger="load"></header>
     <main>
         <section class="authorization">
             <form hx-post="/user/register">
@@ -44,7 +44,6 @@
         </section>
     </main>
 </div>
-<script src="src/constructors/header.js"></script>
 <script src="src/script.js"></script>
 </body>
 </html>

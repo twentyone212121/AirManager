@@ -1,7 +1,7 @@
 <section class="user-information">
     <div class="content">
         <h2>My profile</h2>
-        <h3>Name: <span>#(fullName)</span></h3>
+        <h3>Name: <span id="name">#(fullName)</span></h3>
         <h3>Passport number: <span>#(passportNumber)</span></h3>
         <h3>Phone number: <span>#(phoneNumber)</span></h3>
         <h3>Email: <span>#(email)</span></h3>
@@ -17,7 +17,7 @@
                 <tr>
                     <th colspan="5">Bought tickets:</th>
                 </tr>
-                <tr>
+                <tr id="headings">
                     <th>Date</th>
                     <th>Time</th>
                     <th>Number</th>
@@ -32,7 +32,7 @@
                             <td>#date(flight.fromDate, "HH:mm") - #date(flight.toDate, "HH:mm")</td>
                             <td>#(flight.number)</td>
                             <td>#(flight.fromIata) - #(flight.toIata)</td>
-                            <td><a href="" class="table-button">Print the ticket</a></td>
+                            <td><a href="#" class="table-button" onclick="printTicket(this)">Print the ticket</a></td>
                         </tr>
                     #endfor
                 </tbody">

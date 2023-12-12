@@ -1,7 +1,7 @@
 <h2>Generate report</h2>
 <div class="generate-report-on form-cell">
-    <label for="report-on">Report on</label>
-    <select name="report-on" id="report-on" hx-get="/manager/report/on">
+    <label for="topic">Report on</label>
+    <select name="topic" id="topic" hx-post="/manager/report/on" hx-target="#generate-report">
         <option disabled selected>Select an option</option>
         <option value="fuel">Fuel usage</option>
         <option value="airport-flights">Airport flights</option>
@@ -9,4 +9,4 @@
         <option value="passengers">Passengers</option>
     </select>
 </div>
-<div id="generate-report"></div>
+<div id="generate-report" class="response-container"></div>

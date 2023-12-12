@@ -10,6 +10,7 @@ final class PageController: RouteCollection {
         routes.get("login", use: loginHandler)
         routes.get("logout", use: logoutHandler)
         routes.get("register", use: registerHandler)
+        routes.get("header", use: getHeader)
     }
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -39,6 +40,27 @@ final class PageController: RouteCollection {
 
     func registerHandler(_ req: Request) throws -> EventLoopFuture<View> {
         return req.view.render("register")
+    }
+
+    func getHeader(_ req: Request) throws -> EventLoopFuture<View> {
+        guard let userToken = req.cookies["userToken"]?.string else {
+            // Token not present, user is not authenticated
+            return req.view.render("DataTemplates/Headers/guestHeader")
+        }
+        // Validate the token and get the associated user
+        guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: userToken) else {
+            return req.view.render("DataTemplates/Headers/guestHeader")
+        }
+//
+//        guard let managerToken = req.cookies["managerToken"]?.string else {
+//            // Token not present, user is not authenticated
+//            return req.eventLoop.future(error: Abort(.unauthorized))
+//        }
+//        // Validate the token and get the associated user
+//        guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: managerToken) else {
+//            throw Abort(.unauthorized)
+//        }
+        return req.view.render("DataTemplates/Headers/userHeader")
     }
 }
 

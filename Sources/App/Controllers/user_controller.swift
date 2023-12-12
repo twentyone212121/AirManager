@@ -11,7 +11,7 @@ class UserController: RouteCollection {
         user_routes.post("login", use: login)
     }
     
-    func registerHandler(_ req: Request) throws -> EventLoopFuture<View> {
+    func registerHandler(_ req: Request) throws -> EventLoopFuture<Response> {
         guard let user = try? req.content.decode(User.self) else {
             throw Abort(.badRequest)
         }
@@ -20,20 +20,28 @@ class UserController: RouteCollection {
         do {
             try req.application.databaseManager.addUser(newUser: user)
         } catch {
-            throw Abort(.badRequest)
+            let view = req.view.render("DataTemplates/confirmation", ["text": "You have already registered.", "type": "fail", "to": "/login"])
+            let response = view.encodeResponse(for: req)
+            return response
         }
-        return req.view.render("DataTemplates/confirmation", ["email": user.email])
+        return req.view.render("DataTemplates/confirmation", ["text": "You have successfully registered under email \(user.email).",
+        "type": "success",
+        "to": "/profile"]
+        ).encodeResponse(for: req)
     }
         
-    func buyTicket(_ req: Request) throws -> EventLoopFuture<View> {
+    func buyTicket(_ req: Request) throws -> EventLoopFuture<Response> {
         guard let token = req.cookies["userToken"]?.string else {
-            // Token not present, user is not authenticated
-            return req.eventLoop.future(error: Abort(.unauthorized))
+            let view = req.view.render("DataTemplates/confirmation", ["text": "Sign in first.", "type": "fail", "to": "#"])
+            let response = view.encodeResponse(for: req)
+            return response
         }
         
         // Validate the token and get the associated user
         guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: token) else {
-            throw Abort(.unauthorized)
+            let view = req.view.render("DataTemplates/confirmation", ["text": "Sign in first.", "type": "fail", "to": "#"])
+            let response = view.encodeResponse(for: req)
+            return response
         }
         
         guard let flightId = Int(req.parameters.get("flightId")!) else {
@@ -41,7 +49,11 @@ class UserController: RouteCollection {
         }
         print(flightId)
         try req.application.databaseManager.addTicket(loginData: loginData, flightId: flightId)
-        return req.view.render("DataTemplates/confirmation", ["email": "Confirmed buy"])
+        return req.view.render("DataTemplates/confirmation", [
+            "text": "You bought this flight. Find the ticket in your profile.",
+            "type": "success",
+            "to": "/profile"
+        ]).encodeResponse(for: req)
     }
     
     func getInfo(_ req: Request) throws -> EventLoopFuture<View> {
@@ -70,7 +82,7 @@ class UserController: RouteCollection {
         }
         
         guard let userType = req.application.databaseManager.verifyLogin(loginData: loginData) else {
-            return req.view.render("DataTemplates/confirmation", ["email": "Incorrect login or password"]).encodeResponse(for: req)
+            return req.view.render("DataTemplates/confirmation", ["text": "Incorrect login or password.", "type": "fail", "to": "#"]).encodeResponse(for: req)
         }
         
         let token = loginData.email
@@ -86,10 +98,10 @@ class UserController: RouteCollection {
         switch userType {
         case UserType.manager:
             cookieName = "managerToken"
-            returnHTML = req.view.render("DataTemplates/confirmation", ["email": "Confirmed manager login."])
+            returnHTML = req.view.render("DataTemplates/confirmation", ["text": "Confirmed manager login.", "type": "success", "to": "/"])
         case UserType.user:
             cookieName = "userToken"
-            returnHTML = req.view.render("DataTemplates/confirmation", ["email": "Confirmed user login"])
+            returnHTML = req.view.render("DataTemplates/confirmation", ["text": "Confirmed user login.", "type": "success", "to": "/"])
         }
         
         let response = returnHTML.encodeResponse(for: req)

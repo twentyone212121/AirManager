@@ -24,6 +24,10 @@ class UserController: RouteCollection {
             let response = view.encodeResponse(for: req)
             return response
         }
+        
+        let token = user.email
+        req.session.data["user"] = token
+        
         return req.view.render("DataTemplates/confirmation", ["text": "You have successfully registered under email \(user.email).",
         "type": "success",
         "to": "/profile"]

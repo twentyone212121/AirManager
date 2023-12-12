@@ -33,9 +33,15 @@ final class PageController: RouteCollection {
         return req.view.render("login")
     }
     
-    func logoutHandler(_ req: Request) throws -> EventLoopFuture<View> {
+    func logoutHandler(_ req: Request) throws -> Response {
+        // Redirect the user to the desired page after logout
+        let response = req.redirect(to: "/login")
         
-        return req.view.render("login")
+        // Delete the authentication-related cookie
+        req.session.destroy()
+
+        // Redirect the user to the desired page after logout
+        return response
     }
 
     func registerHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -43,24 +49,28 @@ final class PageController: RouteCollection {
     }
 
     func getHeader(_ req: Request) throws -> EventLoopFuture<View> {
-        guard let userToken = req.cookies["userToken"]?.string else {
-            // Token not present, user is not authenticated
+        let userToken = req.session.data["user"]
+        let managerToken = req.session.data["manager"]
+        
+        switch (userToken, managerToken) {
+        case (.none, .none):
+            return req.view.render("DataTemplates/Headers/guestHeader")
+            
+        case (.some(let userTokenString), .none):
+            guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: userTokenString) else {
+                return req.view.render("DataTemplates/Headers/guestHeader")
+            }
+            return req.view.render("DataTemplates/Headers/userHeader")
+            
+        case (.none, .some(let managerTokenString)):
+            guard let loginData = req.application.databaseManager.validateTokenAndGetManager(token: managerTokenString) else {
+                return req.view.render("DataTemplates/Headers/guestHeader")
+            }
+            return req.view.render("DataTemplates/Headers/managerHeader")
+        
+        case (.some(_), .some(_)):
             return req.view.render("DataTemplates/Headers/guestHeader")
         }
-        // Validate the token and get the associated user
-        guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: userToken) else {
-            return req.view.render("DataTemplates/Headers/guestHeader")
-        }
-//
-//        guard let managerToken = req.cookies["managerToken"]?.string else {
-//            // Token not present, user is not authenticated
-//            return req.eventLoop.future(error: Abort(.unauthorized))
-//        }
-//        // Validate the token and get the associated user
-//        guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: managerToken) else {
-//            throw Abort(.unauthorized)
-//        }
-        return req.view.render("DataTemplates/Headers/userHeader")
     }
 }
 

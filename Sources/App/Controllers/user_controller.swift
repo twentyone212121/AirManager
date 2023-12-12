@@ -31,7 +31,7 @@ class UserController: RouteCollection {
     }
         
     func buyTicket(_ req: Request) throws -> EventLoopFuture<Response> {
-        guard let token = req.cookies["userToken"]?.string else {
+        guard let token = req.session.data["user"] else {
             let view = req.view.render("DataTemplates/confirmation", ["text": "Sign in first.", "type": "fail", "to": "#"])
             let response = view.encodeResponse(for: req)
             return response
@@ -57,7 +57,7 @@ class UserController: RouteCollection {
     }
     
     func getInfo(_ req: Request) throws -> EventLoopFuture<View> {
-        guard let token = req.cookies["userToken"]?.string else {
+        guard let token = req.session.data["user"] else {
             // Token not present, user is not authenticated
             return req.eventLoop.future(error: Abort(.unauthorized))
         }
@@ -86,29 +86,14 @@ class UserController: RouteCollection {
         }
         
         let token = loginData.email
-        // Create an HTTP-only cookie with the token
-        let cookie = HTTPCookies.Value(
-            string: token,
-            expires: Date(timeIntervalSinceNow: 3600), // Set an expiration time
-            isHTTPOnly: true
-        )
         
-        let returnHTML: EventLoopFuture<View>
-        let cookieName: String
         switch userType {
         case UserType.manager:
-            cookieName = "managerToken"
-            returnHTML = req.view.render("DataTemplates/confirmation", ["text": "Confirmed manager login.", "type": "success", "to": "/"])
+            req.session.data["manager"] = token
+            return req.view.render("DataTemplates/confirmation", ["text": "Confirmed manager login.", "type": "success", "to": "/"]).encodeResponse(for: req)
         case UserType.user:
-            cookieName = "userToken"
-            returnHTML = req.view.render("DataTemplates/confirmation", ["text": "Confirmed user login.", "type": "success", "to": "/"])
+            req.session.data["user"] = token
+            return req.view.render("DataTemplates/confirmation", ["text": "Confirmed user login.", "type": "success", "to": "/"]).encodeResponse(for: req)
         }
-        
-        let response = returnHTML.encodeResponse(for: req)
-        response.whenSuccess { response in
-            response.cookies[cookieName] = cookie
-        }
-        
-        return response
     }
 }

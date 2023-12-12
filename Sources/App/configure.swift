@@ -26,6 +26,11 @@ public func configure(_ app: Application) async throws {
         publicDirectory: app.directory.publicDirectory
     )
     app.middleware.use(fileMiddleware)
+    
+    // Configures cookie value creation.
+    app.sessions.configuration.cookieFactory = { sessionID in
+        .init(string: sessionID.string, isSecure: true)
+    }
     app.middleware.use(app.sessions.middleware)
     
     app.databaseManager = DatabaseManager()

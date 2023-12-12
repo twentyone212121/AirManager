@@ -247,7 +247,30 @@ class DatabaseManager {
         } catch {
             return nil
         }
+    }
+    
+    func validateTokenAndGetManager(token: String) -> LoginData? {
+        do {
+            let managerExists = try db.scalar(managers.table
+                .filter(managers.table[managers.emailColumn] == token)
+                .count) > 0
         
+            if managerExists {
+                // If the user exists, return the whole user column
+                let managerSearchQuery = managers.table
+                    .filter(managers.table[managers.emailColumn] == token)
+                let manager = try db.prepare(managerSearchQuery).first() { row in
+                    row[managers.emailColumn] == token
+                }!
+                return LoginData(
+                    email: manager[managers.emailColumn],
+                    password: manager[managers.passwordColumn])
+            } else {
+                return nil
+            }
+        } catch {
+            return nil
+        }
     }
 }
 

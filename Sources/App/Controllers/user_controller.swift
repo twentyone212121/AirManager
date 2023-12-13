@@ -11,6 +11,17 @@ class UserController: RouteCollection {
         user_routes.post("login", use: login)
     }
     
+    static func verifyUser(_ req: Request) -> Bool {
+        guard let token = req.session.data["user"] else {
+            return false
+        }
+        // Validate the token and get the associated user
+        guard let _ = req.application.databaseManager.validateTokenAndGetUser(token: token) else {
+            return false
+        }
+        return true
+    }
+    
     func registerHandler(_ req: Request) throws -> EventLoopFuture<Response> {
         guard let user = try? req.content.decode(User.self) else {
             throw Abort(.badRequest)

@@ -12,7 +12,7 @@ final class ManagerController: RouteCollection {
         manager_routes.get("getAirplaneSelect", use: getAirplaneSelect)
     }
     
-    func verifyManager(_ req: Request) -> Bool {
+    static func verifyManager(_ req: Request) -> Bool {
         guard let token = req.session.data["manager"] else {
             return false
         }
@@ -117,7 +117,7 @@ final class ManagerController: RouteCollection {
     }
     
     func getAirplaneSelect(_ req: Request) throws -> EventLoopFuture<View> {
-        if !verifyManager(req) {
+        if !ManagerController.verifyManager(req) {
             throw Abort(.unauthorized)
         }
         

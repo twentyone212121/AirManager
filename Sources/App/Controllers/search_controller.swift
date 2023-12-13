@@ -27,18 +27,28 @@ class SearchController: RouteCollection {
         switch (from, to, number) {
         case (.none, .none, .some(let number)):
             flights = req.application.databaseManager.getFlights(number: number)
-            print("Found \(flights.count) flights.")
-            return req.view.render("DataTemplates/ManagerActions/managerFlights", ["flights": flights])
             
         case (.some(var from), .some(var to), _):
             flights = req.application.databaseManager.getFlights(from: &from, to: &to)
-            print("Found \(flights.count) flights.")
-            return req.view.render("DataTemplates/flights", FlightsTemplateParams(
-                flights: flights, from: from, to: to))
             
         default:
             throw Abort(.badRequest)
         }
         
+        print("Found \(flights.count) flights.")
+        
+        let tableTemplate: EventLoopFuture<View>
+        if ManagerController.verifyManager(req) {
+            tableTemplate = req.view.render(
+                "DataTemplates/ManagerActions/managerFlights",
+                ["flights": flights]
+            )
+        } else {
+            tableTemplate = req.view.render(
+                "DataTemplates/flights",
+                FlightsTemplateParams(flights: flights, from: from ?? "", to: to ?? "")
+            )
+        }
+        return tableTemplate
     }
 }

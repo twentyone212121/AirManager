@@ -2,7 +2,7 @@
 <nav>
     <ul>
         <li><a href="/profile">My profile</a></li>
-        <li><a href="/search">Search</a></li>
+        <li><a href="/searchPage">Search</a></li>
         <li><a href="/logout">Log out</a></li>
     </ul>
 </nav>

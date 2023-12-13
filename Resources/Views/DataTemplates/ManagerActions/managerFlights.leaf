@@ -13,7 +13,6 @@
     </div>
 </div>
 <div class="result">
-    <h3>From: <span>#(from)</span> To: <span>#(to)</span></h3>
     <div class="table-wrapper">
         <table id="found-flights">
             <thead>

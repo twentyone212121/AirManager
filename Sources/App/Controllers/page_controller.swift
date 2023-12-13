@@ -4,9 +4,8 @@ final class PageController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         
         routes.get(use: indexHandler)
-        routes.get("manager", use: managerHandler)
         routes.get("profile", use: profileHandler)
-        routes.get("search", use: searchHandler)
+        routes.get("searchPage", use: searchHandler)
         routes.get("login", use: loginHandler)
         routes.get("logout", use: logoutHandler)
         routes.get("register", use: registerHandler)
@@ -15,10 +14,6 @@ final class PageController: RouteCollection {
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {
         return req.view.render("index")
-    }
-
-    func managerHandler(_ req: Request) throws -> EventLoopFuture<View> {
-        return req.view.render("manager")
     }
 
     func profileHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -34,14 +29,11 @@ final class PageController: RouteCollection {
     }
     
     func logoutHandler(_ req: Request) throws -> Response {
-        // Redirect the user to the desired page after logout
-        let response = req.redirect(to: "/login")
-        
         // Delete the authentication-related cookie
         req.session.destroy()
 
         // Redirect the user to the desired page after logout
-        return response
+        return req.redirect(to: "/login")
     }
 
     func registerHandler(_ req: Request) throws -> EventLoopFuture<View> {

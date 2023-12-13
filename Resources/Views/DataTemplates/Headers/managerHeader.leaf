@@ -2,6 +2,6 @@
 <nav>
     <ul>
         <li><a href="/manager">Manager</a></li>
-        <li><a href="/" hx-get="/logout">Log out</a></li>
+        <li><a href="/logout">Log out</a></li>
     </ul>
 </nav>

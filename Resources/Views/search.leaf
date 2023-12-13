@@ -14,7 +14,7 @@
         <section class="main-section search-section">
             <h2>Search for flights:</h2>
             <div class="search">
-                <form action="" hx-post="/search" hx-target="#result">
+                <form action="" hx-get="/search" hx-target="#result">
                     <div class="form-cell">
                         <label for="from">From</label>
                         <input type="text" id="from" name="from">

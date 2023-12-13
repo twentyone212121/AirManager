@@ -8,6 +8,19 @@ final class ManagerController: RouteCollection {
         manager_routes.post("create", use: createHandler)
         manager_routes.post("search", use: searchHandler)
         manager_routes.post("report", "on", use: reportInterfaceHandler)
+        
+        manager_routes.get("getAirplaneSelect", use: getAirplaneSelect)
+    }
+    
+    func verifyManager(_ req: Request) -> Bool {
+        guard let token = req.session.data["manager"] else {
+            return false
+        }
+        // Validate the token and get the associated user
+        guard let _ = req.application.databaseManager.validateTokenAndGetManager(token: token) else {
+            return false
+        }
+        return true
     }
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -67,9 +80,8 @@ final class ManagerController: RouteCollection {
         do {
             try req.application.databaseManager.addFlight(flight: flight)
         } catch {
-            let customError = HTTPResponseStatus.unauthorized
             let view = req.view.render("DataTemplates/confirmation", ["text": "Error: \(error)", "type": "fail", "to": "#"])
-            let response = view.encodeResponse(status: customError, for: req)
+            let response = view.encodeResponse(for: req)
             return response
         }
         return req.view.render("DataTemplates/confirmation", [
@@ -102,5 +114,15 @@ final class ManagerController: RouteCollection {
         }
 
         return req.view.render("DataTemplates/ManagerActions/ReportInterfaces/\(templateName)")
+    }
+    
+    func getAirplaneSelect(_ req: Request) throws -> EventLoopFuture<View> {
+        if !verifyManager(req) {
+            throw Abort(.unauthorized)
+        }
+        
+        let airplanes = req.application.databaseManager.getAirplanes()
+        
+        return req.view.render("DataTemplates/ManagerActions/CreateInterfaces/airplaneSelect", ["airplanes": airplanes])
     }
 }

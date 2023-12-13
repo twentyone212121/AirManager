@@ -29,13 +29,7 @@
             <label for="seats">Free seats: </label>
             <input type="number" id="seats" name="freeSeats">
         </div>
-        <div class="form-cell">
-            <label name="airplaneId">Airplane: </label>
-            <select id="airplane" name="airplane">
-                #for (airplane in airplanes):
-                    <option value="#(airplaneId)">#(model)</option>
-                #endfor
-            </select>
+        <div class="form-cell" hx-get="/manager/getAirplaneSelect" hx-trigger="load" hx-target="this">
         </div>
         <button type="submit">Create</button>
     </form>

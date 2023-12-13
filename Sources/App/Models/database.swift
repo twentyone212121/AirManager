@@ -13,6 +13,7 @@ struct Flight: Content, Decodable {
     let number: Int
     let price: Double
     let flightId: Int
+    let airplaneId: Int
     
     enum CodingKeys: String, CodingKey {
         case date
@@ -25,9 +26,10 @@ struct Flight: Content, Decodable {
         case price
         case duration
         case flightId
+        case airplaneId
     }
     
-    init(date: String, fromIata: String, fromDate: Date, toIata: String, toDate: Date, duration: Double, freeSeats: Int, number: Int, price: Double, flightId: Int) {
+    init(date: String, fromIata: String, fromDate: Date, toIata: String, toDate: Date, duration: Double, freeSeats: Int, number: Int, price: Double, flightId: Int, airplaneId: Int) {
         self.date = date
         self.fromIata = fromIata
         self.fromDate = fromDate
@@ -38,6 +40,7 @@ struct Flight: Content, Decodable {
         self.number = number
         self.price = price
         self.flightId = flightId
+        self.airplaneId = airplaneId
     }
     
     init(from decoder: Decoder) throws {
@@ -48,6 +51,7 @@ struct Flight: Content, Decodable {
         self.freeSeats = try container.decode(Int.self, forKey: .freeSeats)
         self.number = try container.decode(Int.self, forKey: .number)
         self.price = try container.decode(Double.self, forKey: .price)
+        self.airplaneId = try container.decode(Int.self, forKey: .airplaneId)
         
         self.fromDate = Date()
         self.toDate = Date()
@@ -155,8 +159,16 @@ class DatabaseManager {
             queryCity = queryCity.filter(arrivalAirport[airports.cityColumn] == to)
         }
         
+        
         let queries = [queryIata, queryCity]
         return getFlightsFromQueries(queries: queries)
+    }
+    
+    func getFlights(number: Int) -> [Flight] {
+        let query = flights.table
+            .where(flights.flightNumberColumn == number)
+        
+        return getFlightsFromQueries(queries: [query])
     }
     
     func getFlightsFromQueries(queries: [QueryType]) -> [Flight] {
@@ -174,7 +186,8 @@ class DatabaseManager {
                         freeSeats: flight[flights.freeSeatsColumn],
                         number: flight[flights.flightNumberColumn],
                         price: flight[flights.priceColumn],
-                        flightId: flight[flights.idColumn]))
+                        flightId: flight[flights.idColumn],
+                        airplaneId: flight[flights.airplaneIdColumn]))
                 }
             }
         } catch {}
@@ -193,7 +206,8 @@ class DatabaseManager {
                 flights.flightNumberColumn <- flight.number,
                 flights.departureIataColumn <- flight.fromIata,
                 flights.arrivalScheduledColumn <- flight.toDate,
-                flights.departureScheduledColumn <- flight.fromDate)
+                flights.departureScheduledColumn <- flight.fromDate,
+                flights.airplaneIdColumn <- flight.airplaneId)
         
         try db.run(query)
     }

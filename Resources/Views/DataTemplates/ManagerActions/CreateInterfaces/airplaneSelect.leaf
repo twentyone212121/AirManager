@@ -1,0 +1,6 @@
+<label name="airplaneId">Airplane: </label>
+<select id="airplane" name="airplaneId">
+    #for(airplane in airplanes):
+        <option value="#(airplane.id)">#(airplane.model)</option>
+    #endfor
+</select>

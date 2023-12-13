@@ -6,16 +6,10 @@ struct SearchQuery: Content {
     var to: String
 }
 
-struct FlightsResult: Encodable {
-    let flights: [Flight]
-    let from: String
-    let to: String
-}
-
 class SearchController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let search = routes.grouped("search")
-        search.post(use: aa)
+        search.get(use: aa)
     }
     
     func aa(req: Request) throws -> EventLoopFuture<View> {
@@ -25,17 +19,26 @@ class SearchController: RouteCollection {
             let to: String
         }
         
-        guard let searchContent = try? req.content.decode(SearchQuery.self) else {
+        let from: String? = req.query["from"]
+        let to: String? = req.query["to"]
+        let number: Int? = req.query["number"]
+        
+        let flights: [Flight]
+        switch (from, to, number) {
+        case (.none, .none, .some(let number)):
+            flights = req.application.databaseManager.getFlights(number: number)
+            print("Found \(flights.count) flights.")
+            return req.view.render("DataTemplates/ManagerActions/managerFlights", ["flights": flights])
+            
+        case (.some(var from), .some(var to), _):
+            flights = req.application.databaseManager.getFlights(from: &from, to: &to)
+            print("Found \(flights.count) flights.")
+            return req.view.render("DataTemplates/flights", FlightsTemplateParams(
+                flights: flights, from: from, to: to))
+            
+        default:
             throw Abort(.badRequest)
         }
-        
-        var from = searchContent.from
-        var to = searchContent.to
-        let flights = req.application.databaseManager.getFlights(from: &from, to: &to)
-        print("Found \(flights.count) flights.")
-        
-        return req.view.render("DataTemplates/flights", FlightsTemplateParams(
-            flights: flights, from: from, to: to))
         
     }
 }

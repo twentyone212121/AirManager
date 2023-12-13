@@ -1,0 +1,14 @@
+<div class="by-date">
+    <form hx-post="/search" hx-target="#foundFlights">
+        <div class="form-cell">
+            <label for="fromDate">From date: </label>
+            <input type="datetime-local" id="from" name="fromDate">
+        </div>
+        <div class="form-cell">
+            <label for="toDate">To date: </label>
+            <input type="datetime-local" id="to" name="toDate">
+        </div>
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div id="toPrint"></div>

@@ -1,27 +1,14 @@
-<div class="filter">
-    <label for="sort">Sort by:</label>
-    <select name="sort" id="sort">
-        <option disabled selected>Select an option</option>
-        <option value="price">By price</option>
-        <option value="time">By duration</option>
-        <option value="departure">By departure time</option>
-        <option value="arrival">By arrival time</option>
-    </select>
-    <div class="sort-order">
-        <label for="sort-order">From low to high:</label>
-        <input type="checkbox" id="sort-order" checked />
-    </div>
-</div>
 <div class="result">
     <div class="table-wrapper">
         <table id="found-flights">
             <thead>
             <tr>
                 <th style="width: 10%">Number</th>
-                <th style="width: 15%">From/To</th>
+                <th style="width: 10%">From/To</th>
                 <th style="width: 15%">Departure time</th>
                 <th style="width: 15%">Arrival time</th>
-                <th style="width: 15%">Price</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 10%">Free seats</th>
                 <th style="width: 30%">Change</th>
             </tr>
             </thead>
@@ -33,7 +20,8 @@
                         <td>#date(flight.fromDate)</td>
                         <td>#date(flight.toDate)</td>
                         <td>#formatDouble("%.2f", (flight.price))</td>
-                        <td><a href="#" hx-get="/manager/change/changeInput" class="table-button">Change</a></td>
+                        <td>#(flight.freeSeats)</td>
+                        <td><a href="#" hx-get="/manager/change/changeInput/#(flight.flightId)" class="table-button">Change</a></td>
                     </tr>
                 #endfor
             </tbody>

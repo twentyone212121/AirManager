@@ -1,5 +1,5 @@
 <div class="by-number">
-    <form hx-get="/search" hx-target="#foundFlights">
+    <form hx-get="/search" hx-target="#result">
         <div class="form-cell">
             <label for="flight-number">Flight number: </label>
             <input type="text" id="flight-number" name="number">
@@ -7,4 +7,4 @@
         <button type="submit">Search</button>
     </form>
 </div>
-<div id="foundFlights" class="response-container"></div>
+<div id="result" class="response-container"></div>

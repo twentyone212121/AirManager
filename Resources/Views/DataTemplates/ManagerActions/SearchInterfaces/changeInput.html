@@ -1,0 +1,10 @@
+<td>#(flight.number)</td>
+<td>#(flight.fromIata)-#(flight.toIata)</td>
+<td>#date(flight.fromDate)</td>
+<td>#date(flight.toDate)</td>
+<td><input type="number" name="price"></td>
+<td><input type="number" name="freeSeats"></td>
+<td><a href="#" hx-get="/manager/change/#(flight.flightId)" class="table-button">Submit</a>
+    <a href="#" hx-get="/manager/change/cancel" class="table-button">Cancel</a>
+    <a href="#" hx-get="/manager/delete/#(flight.flightId)" class="table-button">Delete</a>
+</td>

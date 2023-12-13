@@ -1,5 +1,6 @@
 import Leaf
 import Vapor
+import Redis
 
 extension Application {
     var databaseManager: DatabaseManager {
@@ -10,10 +11,22 @@ extension Application {
             self.storage[DatabaseManagerKey.self] = newValue
         }
     }
+    var redisManager: RedisManager {
+        get {
+            return self.storage[RedisManagerKey.self]!
+        }
+        set {
+            self.storage[RedisManagerKey.self] = newValue
+        }
+    }
 }
 
 private struct DatabaseManagerKey: StorageKey {
     typealias Value = DatabaseManager
+}
+
+private struct RedisManagerKey: StorageKey {
+    typealias Value = RedisManager
 }
 
 // configures your application
@@ -34,7 +47,8 @@ public func configure(_ app: Application) async throws {
     app.middleware.use(app.sessions.middleware)
     
     app.databaseManager = DatabaseManager()
-
+    app.redis.configuration = try RedisConfiguration(hostname: "localhost", port: 6379)
+    app.redisManager = RedisManager(app.redis)
     // register routes
     try routes(app)
 }

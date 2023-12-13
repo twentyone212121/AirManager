@@ -1,5 +1,5 @@
 <div class="by-from-to">
-    <form hx-get="/search" hx-target="#foundFlights">
+    <form hx-get="/search" hx-target="#result">
         <div class="form-cell">
             <label for="from">From: </label>
             <input type="text" id="from" name="from">
@@ -11,4 +11,4 @@
         <button type="submit">Search</button>
     </form>
 </div>
-<div id="foundFlights" class="response-container"></div>
+<div id="result" class="response-container"></div>

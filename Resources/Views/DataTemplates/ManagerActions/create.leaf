@@ -29,7 +29,7 @@
             <label for="seats">Free seats: </label>
             <input type="number" id="seats" name="freeSeats">
         </div>
-        <div class="form-cell" hx-get="/manager/getAirplaneSelect" hx-trigger="load" hx-target="this">
+        <div class="form-cell" hx-get="/manager/getAirplaneSelect" hx-trigger="load" hx-swap="innerHtml">
         </div>
         <button type="submit">Create</button>
     </form>

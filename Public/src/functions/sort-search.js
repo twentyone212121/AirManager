@@ -100,28 +100,33 @@ function sortByArrival(values, order) {
 
 let resultElement = document.getElementById("result");
 resultElement.addEventListener("change", function() {
-    const selectElement = document.getElementById("sort");
-    const sortOrder = document.getElementById("sort-order").checked ? 1 : -1;
-    let tableValues = readTableValues();
-    let sortedValues;
-    switch (selectElement.value) {
-        case "price":
-            sortedValues = sortByPrice(tableValues, sortOrder);
-            displayTable(sortedValues);
-            break;
-        case "time":
-            sortedValues = sortByTime(tableValues, sortOrder);
-            displayTable(sortedValues);
-            break;
-        case "departure":
-            sortedValues = sortByDeparture(tableValues, sortOrder);
-            displayTable(sortedValues);
-            break;
-        case "arrival":
-            sortedValues = sortByArrival(tableValues, sortOrder);
-            displayTable(sortedValues);
-            break;
-        default:
-            break;
+    const selectElement = document.querySelector("#sort");
+    if (selectElement != null) {
+        let sortOrder = document.querySelector("#sort-order");
+        sortOrder = sortOrder.checked ? 1 : -1;
+        let tableValues = readTableValues();
+        let sortedValues;
+        console.log(selectElement.value, sortOrder);
+        switch (selectElement.value) {
+            case "price":
+                sortedValues = sortByPrice(tableValues, sortOrder);
+                console.log(sortedValues);
+                displayTable(sortedValues);
+                break;
+            case "time":
+                sortedValues = sortByTime(tableValues, sortOrder);
+                displayTable(sortedValues);
+                break;
+            case "departure":
+                sortedValues = sortByDeparture(tableValues, sortOrder);
+                displayTable(sortedValues);
+                break;
+            case "arrival":
+                sortedValues = sortByArrival(tableValues, sortOrder);
+                displayTable(sortedValues);
+                break;
+            default:
+                break;
+        }
     }
 });

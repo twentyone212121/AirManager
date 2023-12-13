@@ -8,6 +8,7 @@ final class ManagerController: RouteCollection {
         manager_routes.post("create", use: createHandler)
         manager_routes.post("search", use: searchHandler)
         manager_routes.post("report", "on", use: reportInterfaceHandler)
+        manager_routes.post("change", "changeInput", use: changeInterfaceHandler)
         
         manager_routes.get("getAirplaneSelect", use: getAirplaneSelect)
     }
@@ -124,5 +125,13 @@ final class ManagerController: RouteCollection {
         let airplanes = req.application.databaseManager.getAirplanes()
         
         return req.view.render("DataTemplates/ManagerActions/CreateInterfaces/airplaneSelect", ["airplanes": airplanes])
+    }
+
+    func changeInterfaceHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        guard let flightId = Int(req.parameters.get("flightId")!) else {
+            throw Abort(.expectationFailed)
+        }
+
+        return req.view.render("DataTemplates/ManagerActions/SearchInterfaces/changeInput")
     }
 }

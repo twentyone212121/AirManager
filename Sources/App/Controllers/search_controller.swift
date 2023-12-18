@@ -9,10 +9,10 @@ struct SearchQuery: Content {
 class SearchController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let search = routes.grouped("search")
-        search.get(use: aa)
+        search.get(use: searchFlights)
     }
     
-    func aa(req: Request) throws -> EventLoopFuture<View> {
+    func searchFlights(req: Request) throws -> EventLoopFuture<View> {
         struct FlightsTemplateParams: Encodable {
             let flights: [Flight]
             let from: String

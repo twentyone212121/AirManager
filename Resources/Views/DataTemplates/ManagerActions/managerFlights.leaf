@@ -21,7 +21,7 @@
                         <td>#date(flight.toDate)</td>
                         <td>#formatDouble("%.2f", (flight.price))</td>
                         <td>#(flight.freeSeats)</td>
-                        <td><a href="#" hx-get="/manager/change/changeInput/#(flight.flightId)" class="table-button">Change</a></td>
+                        <td><a href="#" hx-get="/manager/change/changeInput?flightId=#(flight.flightId)" hx-target="closest tr" class="table-button">Change</a></td>
                     </tr>
                 #endfor
             </tbody>

@@ -9,9 +9,9 @@ struct Flight: Content, Decodable {
     let toIata: String
     var toDate: Date
     var duration: Double
-    let freeSeats: Int
+    var freeSeats: Int
     let number: Int
-    let price: Double
+    var price: Double
     let flightId: Int
     let airplaneId: Int
     
@@ -171,6 +171,13 @@ class DatabaseManager {
         return getFlightsFromQueries(queries: [query])
     }
     
+    func getFlight(id: Int) -> Flight? {
+        let query = flights.table
+            .where(flights.idColumn == id)
+        
+        return getFlightsFromQueries(queries: [query]).first
+    }
+    
     func getFlightsFromQueries(queries: [QueryType]) -> [Flight] {
         var result: [Flight] = []
         do {
@@ -208,6 +215,14 @@ class DatabaseManager {
                 flights.arrivalScheduledColumn <- flight.toDate,
                 flights.departureScheduledColumn <- flight.fromDate,
                 flights.airplaneIdColumn <- flight.airplaneId)
+        
+        try db.run(query)
+    }
+    
+    func deleteFlight(id: Int) throws {
+        let query = flights.table
+            .where(flights.idColumn == id)
+            .delete()
         
         try db.run(query)
     }

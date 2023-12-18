@@ -24,7 +24,10 @@ func parseCSVRow(_ row: String) -> [String] {
     return fields
 }
 
-struct CountriesTable {
+protocol SqlTable {
+}
+
+struct CountriesTable: SqlTable {
     let table = Table("countries")
 
     let nameColumn = Expression<String>("name")
@@ -87,7 +90,7 @@ struct CountriesTable {
     }
 }
 
-struct AirportsTable {
+struct AirportsTable: SqlTable {
     let table = Table("airports")
     
     //"Airport ID","Name","City","Country","IATA","ICAO","Latitude","Longitude","Altitude","Timezone","DST","Tz database time zone","Type","Source"
@@ -150,7 +153,7 @@ struct AirportsTable {
     }
 }
 
-struct AirplanesTable {
+struct AirplanesTable: SqlTable {
     let table = Table("airplanes")
     
     let idColumn = Expression<Int>("id")
@@ -201,7 +204,7 @@ struct AirplanesTable {
     }
 }
 
-struct FlightsTable {
+struct FlightsTable: SqlTable {
     let table = Table("flights")
 
     //flight_date,flight_status,departure.iata,departure.scheduled,arrival.iata,arrival.scheduled,flight.number,aircraft
@@ -302,7 +305,7 @@ struct FlightsTable {
   
 }
 
-struct UsersTable {
+struct UsersTable: SqlTable {
     let table = Table("users")
     
     let emailColumn = Expression<String>("email")
@@ -329,7 +332,7 @@ struct UsersTable {
     }
 }
 
-struct ManagersTable {
+struct ManagersTable: SqlTable {
     let table = Table("managers")
     
     let emailColumn = Expression<String>("email")
@@ -350,7 +353,7 @@ struct ManagersTable {
     }
 }
 
-struct TicketsTable {
+struct TicketsTable: SqlTable {
     let table = Table("tickets")
     
     let emailColumn = Expression<String>("email")

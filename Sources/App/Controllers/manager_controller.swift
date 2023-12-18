@@ -8,7 +8,10 @@ final class ManagerController: RouteCollection {
         manager_routes.post("create", use: createHandler)
         manager_routes.post("search", use: searchHandler)
         manager_routes.post("report", "on", use: reportInterfaceHandler)
-        manager_routes.post("change", "changeInput", use: changeInterfaceHandler)
+        manager_routes.get("change", use: changeFlightHandler)
+        manager_routes.get("change", "cancel", use: cancelChangeFlightHandler)
+        manager_routes.get("delete", use: deleteFlightHandler)
+        manager_routes.get("change", "changeInput", use: changeInterfaceHandler)
         
         manager_routes.get("getAirplaneSelect", use: getAirplaneSelect)
     }
@@ -126,12 +129,62 @@ final class ManagerController: RouteCollection {
         
         return req.view.render("DataTemplates/ManagerActions/CreateInterfaces/airplaneSelect", ["airplanes": airplanes])
     }
+    
+    func changeFlightHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        guard let flightId: Int = req.query["flightId"] else {
+            throw Abort(.expectationFailed)
+        }
+        guard let price: Double = req.query["price"] else {
+            throw Abort(.expectationFailed)
+        }
+        guard let freeSeats: Int = req.query["freeSeats"] else {
+            throw Abort(.expectationFailed)
+        }
+        guard var flight = req.application.databaseManager.getFlight(id: flightId) else {
+            throw Abort(.expectationFailed)
+        }
+        flight.price = price
+        flight.freeSeats = freeSeats
+        try req.application.databaseManager.deleteFlight(id: flightId)
+        try req.application.databaseManager.addFlight(flight: flight)
+        
+        return req.view.render(
+            "DataTemplates/ManagerActions/managerFlight",
+            ["flight": flight])
+    }
+    
+    func cancelChangeFlightHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        guard let flightId: Int = req.query["flightId"] else {
+            throw Abort(.expectationFailed)
+        }
+        guard let flight = req.application.databaseManager.getFlight(id: flightId) else {
+            throw Abort(.expectationFailed)
+        }
+        
+        return req.view.render(
+            "DataTemplates/ManagerActions/managerFlight",
+            ["flight": flight])
+    }
+    
+    func deleteFlightHandler(_ req: Request) throws -> String {
+        guard let flightId: Int = req.query["flightId"] else {
+            throw Abort(.expectationFailed)
+        }
+        try req.application.databaseManager.deleteFlight(id: flightId)
+        
+        return ""
+    }
 
     func changeInterfaceHandler(_ req: Request) throws -> EventLoopFuture<View> {
-        guard let flightId = Int(req.parameters.get("flightId")!) else {
+        guard let flightId: Int = req.query["flightId"] else {
+            throw Abort(.expectationFailed)
+        }
+        guard let flight = req.application.databaseManager.getFlight(id: flightId) else {
             throw Abort(.expectationFailed)
         }
 
-        return req.view.render("DataTemplates/ManagerActions/SearchInterfaces/changeInput")
+        return req.view.render(
+            "DataTemplates/ManagerActions/SearchInterfaces/changeInput",
+            ["flight": flight])
     }
 }

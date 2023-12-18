@@ -1,0 +1,31 @@
+<div class="result">
+    <div class="table-wrapper">
+        <span>#(flight.fromIata)</span>
+        <table id="found-flights">
+            <thead>
+            <tr>
+                <th style="width: 10%">Number</th>
+                <th style="width: 10%">To</th>
+                <th style="width: 15%">Departure time</th>
+                <th style="width: 15%">Arrival time</th>
+                <th style="width: 10%">Price</th>
+                <th style="width: 10%">Free seats</th>
+                <th style="width: 30%">Generate PDF</th>
+            </tr>
+            </thead>
+            <tbody>
+                #for(flight in flights):
+                    <tr>
+                        <td>#(flight.number)</td>
+                        <td>#(flight.toIata)</td>
+                        <td>#date(flight.fromDate)</td>
+                        <td>#date(flight.toDate)</td>
+                        <td>#formatDouble("%.2f", (flight.price))</td>
+                        <td>#(flight.freeSeats)</td>
+                        <td><a href="#" onclick="printReport(this)" id="airport-flights" class="table-button">Download</a></td>
+                    </tr>
+                #endfor
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<div class="result">
+    <div class="table-wrapper">
+        <span>#(flight.number)</span>
+        <span>#(flight.fromDate)</span>
+        <table id="found-flights">
+            <thead>
+            <tr>
+                <th style="width: 10%">Full name</th>
+                <th style="width: 10%">Passport number</th>
+                <th style="width: 15%">Gender</th>
+                <th style="width: 15%">Number of seats</th>
+                <th style="width: 30%">Generate PDF</th>
+            </tr>
+            </thead>
+            <tbody>
+                #for(flight in flights):
+                    <tr>
+                        <td>#(user.fullName)</td>
+                        <td>#(user.passportNumber)</td>
+                        <td>#(user.gender)</td>
+                        <td>#()</td>
+                        <td><a href="#" onclick="printReport(this)" id="passengers" class="table-button">Download</a></td>
+                    </tr>
+                #endfor
+            </tbody>
+        </table>
+    </div>
+</div>

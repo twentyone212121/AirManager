@@ -24,6 +24,18 @@ func parseCSVRow(_ row: String) -> [String] {
     return fields
 }
 
+func toCurrentDay(_ dateString: String) -> Date {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+    
+    let currentDayDate = Date().ISO8601Format()
+    let centerIndex = currentDayDate.index(currentDayDate.startIndex, offsetBy: 10)
+    let currentDateString = currentDayDate[currentDayDate.startIndex..<centerIndex] + dateString[centerIndex...]
+    print(currentDateString)
+    return dateFormatter.date(from: String(currentDateString))
+        ?? Date(timeIntervalSince1970: 0)
+}
+
 protocol SqlTable {
 }
 
@@ -266,19 +278,11 @@ struct FlightsTable: SqlTable {
                 let date = columns[0].trimmingCharacters(in: .whitespacesAndNewlines)
                 let status = columns[1].trimmingCharacters(in: .whitespacesAndNewlines)
                 let departureIata = columns[2].trimmingCharacters(in: .whitespacesAndNewlines)
-                let departureScheduled = dateFormatter.date(
-                    from:columns[3].trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    )
-                ) ?? Date(timeIntervalSince1970: 0)
+                let departureScheduled = toCurrentDay(columns[3].trimmingCharacters(in: .whitespacesAndNewlines))
                 let arrivalIata = columns[4].trimmingCharacters(in: .whitespacesAndNewlines)
-                let arrivalScheduled = dateFormatter.date(
-                    from: columns[5].trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    )
-                ) ?? Date(timeIntervalSince1970: 0)
+                let arrivalScheduled = toCurrentDay(columns[5].trimmingCharacters(in: .whitespacesAndNewlines))
                 let flightNumber = Int(columns[6].trimmingCharacters(in: .whitespacesAndNewlines)) ?? 0
-                let duration = arrivalScheduled.timeIntervalSince(departureScheduled) / 3600
+                let duration = (arrivalScheduled.timeIntervalSince(departureScheduled) / 36).rounded() / 100
                 let freeSeats = Int.random(in: 10..<301)
                 var price = duration * Double(300 - freeSeats) + Double(Int.random(in: -100..<100))
                 if price <= 100 {

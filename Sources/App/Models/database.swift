@@ -178,6 +178,15 @@ class DatabaseManager {
         return getFlightsFromQueries(queries: [query]).first
     }
     
+    func getUpcomingFlights() -> [Flight] {
+        let currentDate = Date()
+        let twoHoursLaterDate = currentDate.addingTimeInterval(TimeInterval(7200))
+        let query = flights.table
+            .where(currentDate...twoHoursLaterDate ~= flights.departureScheduledColumn)
+        
+        return getFlightsFromQueries(queries: [query])
+    }
+    
     func getFlightsFromQueries(queries: [QueryType]) -> [Flight] {
         var result: [Flight] = []
         do {

@@ -49,6 +49,12 @@ public func configure(_ app: Application) async throws {
     app.databaseManager = DatabaseManager()
     app.redis.configuration = try RedisConfiguration(hostname: "localhost", port: 6379)
     app.redisManager = RedisManager(app.redis)
+    try app.redisManager.pushUpcomingFlights(
+        app.redisManager.flightsToUpcomingFlights(
+            app.databaseManager.getUpcomingFlights()
+        )
+    )
+    
     // register routes
     try routes(app)
 }

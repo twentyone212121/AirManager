@@ -180,7 +180,7 @@ class DatabaseManager {
     
     func getUpcomingFlights() -> [Flight] {
         let currentDate = Date()
-        let twoHoursLaterDate = currentDate.addingTimeInterval(TimeInterval(7200))
+        let twoHoursLaterDate = currentDate.addingTimeInterval(TimeInterval(1800))
         let query = flights.table
             .where(currentDate...twoHoursLaterDate ~= flights.departureScheduledColumn)
         

@@ -10,6 +10,7 @@ final class PageController: RouteCollection {
         routes.get("logout", use: logoutHandler)
         routes.get("register", use: registerHandler)
         routes.get("header", use: getHeader)
+        routes.get("upcomingFlights", use: upcomingFlightsHandler)
     }
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -62,6 +63,16 @@ final class PageController: RouteCollection {
         
         case (.some(_), .some(_)):
             return req.view.render("DataTemplates/Headers/guestHeader")
+        }
+    }
+    
+    func upcomingFlightsHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        let upcomingFlights = req.application.redisManager.getUpcomingFlights()
+        return upcomingFlights.flatMap {
+            return req.view.render(
+                "DataTemplates/upcomingFlights",
+                ["upcomingFlights": $0]
+            )
         }
     }
 }

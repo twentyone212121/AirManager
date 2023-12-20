@@ -31,7 +31,6 @@ func toCurrentDay(_ dateString: String) -> Date {
     let currentDayDate = Date().ISO8601Format()
     let centerIndex = currentDayDate.index(currentDayDate.startIndex, offsetBy: 10)
     let currentDateString = currentDayDate[currentDayDate.startIndex..<centerIndex] + dateString[centerIndex...]
-    print(currentDateString)
     return dateFormatter.date(from: String(currentDateString))
         ?? Date(timeIntervalSince1970: 0)
 }

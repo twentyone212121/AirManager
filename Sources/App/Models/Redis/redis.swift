@@ -1,7 +1,26 @@
 import Foundation
 import Redis
+import Vapor
 
-struct UpcomingFlight: Encodable {
+struct UpcomingFlight: Content, RESPValueConvertible {
+    init?(fromRESP value: RediStack.RESPValue) {
+        self = try! JSONDecoder().decode(UpcomingFlight.self, from: value.byteBuffer!)
+    }
+    
+    func convertedToRESPValue() -> RediStack.RESPValue {
+        
+        let encoder = JSONEncoder()
+        let value = try! encoder.encodeAsByteBuffer(self, allocator: ByteBufferAllocator())
+        return .bulkString(value)
+    }
+    
+    init(time: Date, number: Int, from: String, to: String) {
+        self.time = time
+        self.number = number
+        self.from = from
+        self.to = to
+    }
+    
     let time: Date
     let number: Int
     let from: String
@@ -25,16 +44,22 @@ class RedisManager {
                 to: $0.toIata
             )
         }.sorted {
-            $0.from < $1.from
+            $0.time < $1.time
         }
     }
     
     func pushUpcomingFlights(_ flights: [UpcomingFlight]) throws {
-        let encoder = JSONEncoder()
-        let flightsData = try flights.map {
-            try encoder.encode($0).base64EncodedString()
-        }
-        let result = try redis.rpush(flightsData, into: upcomingFlights).wait();
+        try redis.delete(upcomingFlights).wait()
+        
+        print("Pushing values: ")
+        let result = try redis.rpush(flights, into: upcomingFlights).wait();
         print("Result after pushing upcoming flights: \(result)")
+    }
+    
+    func getUpcomingFlights() -> EventLoopFuture<[UpcomingFlight?]> {
+        return redis.lrange(
+            from: upcomingFlights,
+            fromIndex: 0,
+            as: UpcomingFlight.self)
     }
 }

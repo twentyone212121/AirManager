@@ -39,4 +39,10 @@ extension DatabaseManager {
         let query = flights.table.where(flights.departureIataColumn == departureIata)
         return getFlightsFromQueries(queries: [query])
     }
+    
+    func getFlightsBetween(from: Date, to: Date) -> [Flight] {
+        let query = flights.table
+            .where(from...to ~= flights.departureScheduledColumn)
+        return getFlightsFromQueries(queries: [query])
+    }
 }

@@ -1,4 +1,4 @@
-<form hx-post="/search" hx-target="#foundFlights">
+<form hx-get="/manager/reports/flightsBetween" hx-target="#toPrint">
     <div class="form-cell">
         <label for="fromDate">From date: </label>
         <input type="datetime-local" id="from" name="fromDate">

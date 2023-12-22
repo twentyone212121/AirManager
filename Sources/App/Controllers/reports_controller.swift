@@ -5,6 +5,7 @@ final class ReportsController: RouteCollection {
         let reports_routes = routes.grouped("reports")
         reports_routes.get("fuelUsage", use: fuelUsageHandler)
         reports_routes.get("airportFlights", use: airportFlightsHandler)
+        reports_routes.get("flightsBetween", use: flightsBetweenHandler)
     }
     
     func fuelUsageHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -31,6 +32,27 @@ final class ReportsController: RouteCollection {
         return req.view.render(
             "DataTemplates/ManagerActions/ReportInterfaces/airportFlightsReportTable",
             AirportFlightsParams(flights: flights, airport: airport)
+        )
+    }
+    
+    func flightsBetweenHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        guard let fromDate: String = req.query["fromDate"],
+                let toDate: String = req.query["toDate"] else {
+            throw Abort(.badRequest)
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+
+        guard let fromDate = dateFormatter.date(from: fromDate),
+              let toDate = dateFormatter.date(from: toDate) else {
+            throw Abort(.expectationFailed)
+        }
+        
+        let flights = req.application.databaseManager.getFlightsBetween(from: fromDate, to: toDate)
+        return req.view.render(
+            "DataTemplates/ManagerActions/ReportInterfaces/timeFlightsReportTable",
+            ["flights": flights]
         )
     }
 }

@@ -13,11 +13,11 @@
             </tr>
             </thead>
             <tbody>
-                #for(flight in flights):
+                #for(passenger in passengers):
                     <tr>
-                        <td>#(user.fullName)</td>
-                        <td>#(user.passportNumber)</td>
-                        <td>#(user.gender)</td>
+                        <td>#(passenger.fullName)</td>
+                        <td>#(passenger.passportNumber)</td>
+                        <td>#(passenger.gender)</td>
                         <td>#()</td>
                         <td><a href="#" onclick="printReport(this)" id="passengers" class="table-button">Download</a></td>
                     </tr>

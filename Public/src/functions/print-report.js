@@ -49,8 +49,8 @@ function printReport(element) {
             printTable = printReportOnPassengers(element);
             break;
         case "time-flights":
-            let from = '20Dec, 2022 14:50';
-            let to = '20Dec, 2022 15:50'
+            let from = document.getElementById("time-to").innerHTML;
+            let to = document.getElementById("time-from").innerHTML;
             reportHeading = `Flights on period from ${from} to ${to}`;
             printTable = printReportOnTimeFlights();
             break;

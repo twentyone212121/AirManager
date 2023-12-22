@@ -24,6 +24,7 @@
         </section>
     </main>
 </div>
+<script src="src/functions/print-report.js"></script>
 <script src="src/script.js"></script>
 </body>
 </html>

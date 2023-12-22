@@ -11,6 +11,7 @@ final class PageController: RouteCollection {
         routes.get("register", use: registerHandler)
         routes.get("header", use: getHeader)
         routes.get("upcomingFlights", use: upcomingFlightsHandler)
+        routes.get("welcoming", use: welcomingHandler)
     }
 
     func indexHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -73,6 +74,32 @@ final class PageController: RouteCollection {
                 "DataTemplates/upcomingFlights",
                 ["upcomingFlights": $0]
             )
+        }
+    }
+
+    func welcomingHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        let userToken = req.session.data["user"]
+        let managerToken = req.session.data["manager"]
+
+        switch (userToken, managerToken) {
+        case (.none, .none):
+            return req.view.render("DataTemplates/WelcomeScreens/guest-welcome")
+
+        case (.some(let userTokenString), .none):
+            guard let loginData = req.application.databaseManager.validateTokenAndGetUser(token: userTokenString) else {
+                return req.view.render("DataTemplates/WelcomeScreens/guest-welcome")
+            }
+            let userData = try req.application.databaseManager.getUserData(loginData: loginData)
+            return req.view.render("DataTemplates/WelcomeScreens/user-welcome", userData.self)
+
+        case (.none, .some(let managerTokenString)):
+            guard let loginData = req.application.databaseManager.validateTokenAndGetManager(token: managerTokenString) else {
+                return req.view.render("DataTemplates/WelcomeScreens/guest-welcome")
+            }
+            return req.view.render("DataTemplates/WelcomeScreens/manager-welcome")
+
+        case (.some(_), .some(_)):
+            return req.view.render("DataTemplates/WelcomeScreens/guest-welcome")
         }
     }
 }

@@ -1,0 +1,7 @@
+<h1>Welcome to Air Manager, #(fullName)!</h1>
+<p>Please proceed to the "Profile" page if you wish to:</p>
+<ul>
+    <li>manage your tickets</li>
+    <li>manage your information</li>
+</ul>
+<p>If you only need to search or buy tickets, please click "Search".</p>

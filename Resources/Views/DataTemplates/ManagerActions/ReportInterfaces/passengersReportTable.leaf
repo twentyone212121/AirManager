@@ -2,9 +2,9 @@
     <div class="table-wrapper">
         <span>#(flight.number)</span>
         <span>#(flight.fromDate)</span>
-        <table id="found-flights">
+        <table id="report-table">
             <thead>
-            <tr>
+            <tr id="headings">
                 <th style="width: 10%">Full name</th>
                 <th style="width: 10%">Passport number</th>
                 <th style="width: 15%">Gender</th>

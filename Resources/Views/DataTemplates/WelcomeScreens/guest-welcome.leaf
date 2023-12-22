@@ -1,0 +1,8 @@
+<h1>Welcome to Air Manager</h1>
+<p>Please proceed to the "Sign in" page if you wish to:</p>
+<ul>
+    <li>manage your tickets</li>
+    <li>manage your information</li>
+    <li>manage flights (for administrator)</li>
+</ul>
+<p>If you only need to search tickets, please click "Search".</p>

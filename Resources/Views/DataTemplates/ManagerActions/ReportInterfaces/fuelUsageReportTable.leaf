@@ -1,28 +1,27 @@
-<div class="result">
-    <div class="table-wrapper">
-        <table id="found-flights">
-            <thead>
-            <tr>
-                <th style="width: 10%">Number</th>
-                <th style="width: 10%">From/To</th>
-                <th style="width: 15%">Duration</th>
-                <th style="width: 15%">Fuel per hour</th>
-                <th style="width: 20%">Total fuel consumption</th>
-                <th style="width: 30%">Generate PDF</th>
-            </tr>
-            </thead>
-            <tbody>
-                #for(fuelUsageRow in fuelUsageRows):
-                    <tr>
-                        <td>#(fuelUsageRow.number)</td>
-                        <td>#(fuelUsageRow.from)-#(fuelUsageRow.to)</td>
-                        <td>#date(fuelUsageRow.duration)</td>
-                        <td>#(fuelUsageRow.fuelPerHour)</td>
-                        <td>#(fuelUsageRow.totalFuelConsumption)</td>
-                        <td><a href="#" onclick="printReport(this)" id="fuel-usage" class="table-button">Download</a></td>
-                    </tr>
-                #endfor
-            </tbody>
-        </table>
-    </div>
+<div class="table-wrapper">
+    <table id="report-table">
+        <thead>
+        <tr id="headings">
+            <th style="width: 10%">Number</th>
+            <th style="width: 10%">From/To</th>
+            <th style="width: 15%">Duration</th>
+            <th style="width: 15%">Fuel per hour</th>
+            <th style="width: 20%">Total fuel consumption</th>
+            <th style="width: 30%">Generate PDF</th>
+        </tr>
+        </thead>
+        <tbody>
+            #for(fuelUsageRow in fuelUsageRows):
+                <tr>
+                    <td class="flight-number">#(fuelUsageRow.number)</td>
+                    <td>#(fuelUsageRow.from)-#(fuelUsageRow.to)</td>
+                    <td>#(fuelUsageRow.duration)</td>
+                    <td>#(fuelUsageRow.fuelPerHour) L</td>
+                    <td>#(fuelUsageRow.totalFuelConsumption) L</td>
+                    <td><a href="#" onclick="printReport(this)" id="fuel-usage" class="table-button">Download</a></td>
+                </tr>
+            #endfor
+        </tbody>
+    </table>
 </div>
+

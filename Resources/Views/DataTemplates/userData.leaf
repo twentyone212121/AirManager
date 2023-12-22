@@ -10,7 +10,7 @@
 </section>
 <section class="user-flights">
     <div class="content">
-        <h2>My flights</h2>
+        <h2 class="mg-bt">My flights</h2>
         <div class="table-wrapper">
             <table id="user-flights-list">
                 <thead>

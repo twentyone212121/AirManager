@@ -1,0 +1,8 @@
+<h1>Welcome to Air Manager, admin</h1>
+<p>Please proceed to the "Manager" page if you wish to:</p>
+<ul>
+    <li>add new flights</li>
+    <li>manage old flights</li>
+    <li>delete old flights</li>
+    <li>generate reports</li>
+</ul>

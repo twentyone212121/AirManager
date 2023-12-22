@@ -10,7 +10,7 @@
 <div class="wrapper">
     <header hx-get="/header" hx-trigger="load"></header>
     <main>
-        <section class="coming-flights-widget" id="coming-flights-widget"></section>
+        <section class="coming-flights-widget" hx-get="/upcomingFlights" hx-trigger="load"></section>
         <section class="main-section search-section">
             <h2>Search for flights:</h2>
             <div class="search">
@@ -31,7 +31,6 @@
     </main>
 </div>
 </body>
-<script src="src/constructors/coming-flights-widget.js"></script>
 <script src="src/functions/sort-search.js"></script>
 <script src="src/script.js"></script>
 </html>

@@ -1,10 +1,9 @@
-<div class="by-number">
-    <form hx-get="/manager/reports/airportFlights" hx-target="#toPrint">
-        <div class="form-cell">
-            <label for="airport">Airport: </label>
-            <input type="text" id="airport" name="airport">
-        </div>
-        <button type="submit">Search</button>
-    </form>
-</div>
-<div id="toPrint"></div>
+<form hx-get="/manager/reports/airportFlights" hx-target="#toPrint">
+    <div class="form-cell">
+        <label for="airport">Airport: </label>
+        <input type="text" id="airport" name="airport">
+    </div>
+    <button type="submit">Search</button>
+</form>
+<div id="toPrint" class="mg-tp"></div>
+

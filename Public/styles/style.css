@@ -6,6 +6,14 @@
     --black: #0D090A;
 }
 
+.mg-bt {
+    margin-bottom: 15px;
+}
+
+.mg-tp {
+    margin-top: 15px;
+}
+
 body {
     margin: 0 auto;
     font-family: Arial, serif;
@@ -147,7 +155,7 @@ input, select {
 .coming-flights-widget {
     border-radius: 15px;
     margin: 10px;
-    max-width: 260px;
+    width: 260px;
     height: 500px;
     background-color: var(--light-blue);
     text-align: center;
@@ -249,7 +257,7 @@ input, select {
 .table-wrapper {
     border-radius: 15px;
     overflow: auto;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
     border: 1px solid var(--black);
 }
 
@@ -332,8 +340,8 @@ input, select {
     background-color: #f44336;
 }
 
-#toPrint {
-    display: none;
+.print-report-button {
+    max-width: 200px;
 }
 
 

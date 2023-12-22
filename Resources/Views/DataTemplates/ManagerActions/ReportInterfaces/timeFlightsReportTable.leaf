@@ -1,16 +1,16 @@
 <div class="result">
+    <button onclick="printReport(this)" id="time-flights" class="print-report-button">Download in PFD / Print</button>
+    <span>#(periodOfTime)</span>
     <div class="table-wrapper">
-        <span>#(periodOfTime)</span>
-        <table id="found-flights">
+        <table id="report-table">
             <thead>
-            <tr>
-                <th style="width: 10%">Number</th>
-                <th style="width: 10%">From/To</th>
-                <th style="width: 15%">Departure time</th>
-                <th style="width: 15%">Arrival time</th>
-                <th style="width: 10%">Price</th>
-                <th style="width: 10%">Free seats</th>
-                <th style="width: 30%">Generate PDF</th>
+            <tr id="headings">
+                <th style="width: 15%">Number</th>
+                <th style="width: 15%">From/To</th>
+                <th style="width: 20%">Departure time</th>
+                <th style="width: 20%">Arrival time</th>
+                <th style="width: 15%">Price</th>
+                <th style="width: 15%">Free seats</th>
             </tr>
             </thead>
             <tbody>
@@ -22,7 +22,6 @@
                         <td>#date(flight.toDate)</td>
                         <td>#formatDouble("%.2f", (flight.price))</td>
                         <td>#(flight.freeSeats)</td>
-                        <td><a href="#" onclick="printReport(this)" id="time-flights" class="table-button">Download</a></td>
                     </tr>
                 #endfor
             </tbody>

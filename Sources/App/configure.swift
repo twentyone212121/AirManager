@@ -88,12 +88,6 @@ public func configure(_ app: Application) async throws {
     )
     app.middleware.use(fileMiddleware)
     
-    // Configures cookie value creation.
-    app.sessions.configuration.cookieFactory = { sessionID in
-        .init(string: sessionID.string, isSecure: true)
-    }
-    app.middleware.use(app.sessions.middleware)
-    
     app.databaseManager = DatabaseManager()
     app.redis.configuration = try RedisConfiguration(hostname: "localhost", port: 6379)
     app.redisManager = RedisManager(app.redis)
@@ -105,6 +99,13 @@ public func configure(_ app: Application) async throws {
     
     app.task = UpcomingFlightsUpdateTask(databaseManager: app.databaseManager, redisManager: app.redisManager)
     app.task.runTask()
+    
+    // Configures cookie value creation.
+    app.sessions.configuration.cookieFactory = { sessionID in
+        .init(string: sessionID.string, isSecure: true)
+    }
+    app.sessions.use(.redis)
+    app.middleware.use(app.sessions.middleware)
     
     // register routes
     try routes(app)

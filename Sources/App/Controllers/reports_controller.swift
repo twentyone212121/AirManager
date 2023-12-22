@@ -19,13 +19,18 @@ final class ReportsController: RouteCollection {
     }
     
     func airportFlightsHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        struct AirportFlightsParams: Content  {
+            let flights: [Flight]
+            let airport: String
+        }
+
         guard let airport: String = req.query["airport"] else {
             throw Abort(.expectationFailed)
         }
         let flights = req.application.databaseManager.getFlightsFromAirport(departureIata: airport)
         return req.view.render(
             "DataTemplates/ManagerActions/ReportInterfaces/airportFlightsReportTable",
-            ["flights": flights]
+            AirportFlightsParams(flights: flights, airport: airport)
         )
     }
 }

@@ -14,7 +14,10 @@ function printReportOnFuel(element) {
 }
 
 function printReportOnPassengers(element) {
-
+    let table = document.getElementById("report-table");
+    let printTable = document.createElement('table');
+    printTable.innerHTML = table.outerHTML;
+    return printTable;
 }
 
 function printReportOnTimeFlights() {
@@ -44,8 +47,9 @@ function printReport(element) {
 
     switch (element.id) {
         case "passengers":
-            let number = 200;
-            reportHeading = `Passengers on flight ${number}`;
+            let number = document.getElementById("flight-number");
+            let date = document.getElementById("from-date");
+            reportHeading = `Passengers on flight ${number} on date ${date}`;
             printTable = printReportOnPassengers(element);
             break;
         case "time-flights":

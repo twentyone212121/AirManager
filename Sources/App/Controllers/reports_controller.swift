@@ -38,6 +38,12 @@ final class ReportsController: RouteCollection {
     }
     
     func flightsBetweenHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        struct FlightsBetweenData: Content {
+            let flights: [Flight]
+            let timeFrom: Date
+            let timeTo: Date
+        }
+        
         guard let fromDate: String = req.query["fromDate"],
                 let toDate: String = req.query["toDate"] else {
             throw Abort(.badRequest)
@@ -54,7 +60,7 @@ final class ReportsController: RouteCollection {
         let flights = req.application.databaseManager.getFlightsBetween(from: fromDate, to: toDate)
         return req.view.render(
             "DataTemplates/ManagerActions/ReportInterfaces/timeFlightsReportTable",
-            ["flights": flights]
+            FlightsBetweenData(flights: flights, timeFrom: fromDate, timeTo: toDate)
         )
     }
     

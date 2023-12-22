@@ -54,7 +54,7 @@ extension DatabaseManager {
         do {
             return try db.prepare(query).map { (row) -> User in
                 User(
-                    email: row[users.emailColumn],
+                    email: row[users.table[users.emailColumn]],
                     password: "",
                     fullName: row[users.fullNameColumn],
                     passportNumber: row[users.passportNumberColumn],

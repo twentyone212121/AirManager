@@ -1,4 +1,4 @@
-<form hx-post="/report/passengers/search" hx-target="#toPrint">
+<form hx-get="/manager/reports/passengersSearch" hx-target="#toPrint">
     <div class="form-cell">
         <label for="flight-number">Flight number: </label>
         <input type="text" id="flight-number" name="number">

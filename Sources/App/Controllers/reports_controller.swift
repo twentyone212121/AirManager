@@ -6,6 +6,8 @@ final class ReportsController: RouteCollection {
         reports_routes.get("fuelUsage", use: fuelUsageHandler)
         reports_routes.get("airportFlights", use: airportFlightsHandler)
         reports_routes.get("flightsBetween", use: flightsBetweenHandler)
+        reports_routes.get("passengersSearch", use: passengersSearchHandler)
+        reports_routes.get("passengers", use: passengersHandler)
     }
     
     func fuelUsageHandler(_ req: Request) throws -> EventLoopFuture<View> {
@@ -53,6 +55,28 @@ final class ReportsController: RouteCollection {
         return req.view.render(
             "DataTemplates/ManagerActions/ReportInterfaces/timeFlightsReportTable",
             ["flights": flights]
+        )
+    }
+    
+    func passengersSearchHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        guard let number: Int = req.query["number"] else {
+            throw Abort(.badRequest)
+        }
+        let flights = req.application.databaseManager.getFlights(number: number)
+        return req.view.render(
+            "DataTemplates/ManagerActions/ReportInterfaces/passengersReportSearchTable",
+            ["flights": flights]
+        )
+    }
+    
+    func passengersHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        guard let flightId: Int = req.query["flightId"] else {
+            throw Abort(.badRequest)
+        }
+        let passengers = req.application.databaseManager.getUsers(by: flightId)
+        return req.view.render(
+            "DataTemplates/ManagerActions/ReportInterfaces/passengersReportTable",
+            ["passengers": passengers]
         )
     }
 }

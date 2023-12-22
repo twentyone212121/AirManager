@@ -18,7 +18,7 @@
                         <td>#(passenger.fullName)</td>
                         <td>#(passenger.passportNumber)</td>
                         <td>#(passenger.gender)</td>
-                        <td>#(passenger.telephoneNumber)</td>
+                        <td>#(passenger.phoneNumber)</td>
                     </tr>
                 #endfor
             </tbody>

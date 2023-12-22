@@ -1,6 +1,6 @@
 <div class="result">
     <button onclick="printReport(this)" id="time-flights" class="print-report-button">Download in PFD / Print</button>
-    <span>#(periodOfTime)</span>
+    <span>Flights that depart from #(time.from) to #(time.to)</span>
     <div class="table-wrapper">
         <table id="report-table">
             <thead>

@@ -1,0 +1,22 @@
+<div class="table-wrapper">
+    <table id="found-flights">
+        <thead>
+        <tr>
+            <th style="width: 20%">Number</th>
+            <th style="width: 20%" id="departure">From-To</th>
+            <th style="width: 20%">Departure time</th>
+            <th style="width: 30%">Show passengers</th>
+        </tr>
+        </thead>
+        <tbody>
+            #for(flight in flights):
+                <tr>
+                    <td>#(flight.number)</td>
+                    <td>#(flight.fromIata)-#(flight.toIata)</td>
+                    <td>#date(flight.fromDate, "HH:mm")</td>
+                    <td><a href="#" hx-get="/report/passengers" hx-swap="afterend"class="table-button">Buy the ticket</a></td>
+                </tr>
+            #endfor
+        </tbody>
+    </table>
+</div>

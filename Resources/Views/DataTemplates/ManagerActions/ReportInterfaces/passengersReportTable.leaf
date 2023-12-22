@@ -1,15 +1,15 @@
-<div class="result">
+<div class="popup-table">
     <div class="table-wrapper">
-        <span>#(flight.number)</span>
-        <span>#(flight.fromDate)</span>
+        <button onclick="printReport(this)" id="airport-flights" class="print-report-button">Download in PFD / Print</button>
+        <span id="flight-number">Flight №#(flight.number)</span>
+        <span id="from-date">On #(flight.fromDate)</span>
         <table id="report-table">
             <thead>
             <tr id="headings">
-                <th style="width: 10%">Full name</th>
-                <th style="width: 10%">Passport number</th>
-                <th style="width: 15%">Gender</th>
-                <th style="width: 15%">Number of seats</th>
-                <th style="width: 30%">Generate PDF</th>
+                <th style="width: 25%">Full name</th>
+                <th style="width: 25%">Passport number</th>
+                <th style="width: 25%">Gender</th>
+                <th style="width: 25%">Telephone</th>
             </tr>
             </thead>
             <tbody>
@@ -18,8 +18,7 @@
                         <td>#(passenger.fullName)</td>
                         <td>#(passenger.passportNumber)</td>
                         <td>#(passenger.gender)</td>
-                        <td>#()</td>
-                        <td><a href="#" onclick="printReport(this)" id="passengers" class="table-button">Download</a></td>
+                        <td>#(passenger.telephoneNumber)</td>
                     </tr>
                 #endfor
             </tbody>

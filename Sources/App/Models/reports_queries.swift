@@ -45,4 +45,26 @@ extension DatabaseManager {
             .where(from...to ~= flights.departureScheduledColumn)
         return getFlightsFromQueries(queries: [query])
     }
+    
+    func getUsers(by flightId: Int) -> [User] {
+        let query = tickets.table
+            .join(users.table, on: tickets.table[tickets.emailColumn] == users.table[users.emailColumn])
+            .where(tickets.table[tickets.flightIdColumn] == flightId)
+        
+        do {
+            return try db.prepare(query).map { (row) -> User in
+                User(
+                    email: row[users.emailColumn],
+                    password: "",
+                    fullName: row[users.fullNameColumn],
+                    passportNumber: row[users.passportNumberColumn],
+                    phoneNumber: row[users.phoneNumberColumn],
+                    gender: row[users.genderColumn]
+                )
+            }
+        } catch {
+            print("\(error)")
+        }
+        return []
+    }
 }

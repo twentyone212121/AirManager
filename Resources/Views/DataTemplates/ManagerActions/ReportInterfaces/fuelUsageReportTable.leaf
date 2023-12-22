@@ -12,13 +12,13 @@
             </tr>
             </thead>
             <tbody>
-                #for(flight in flights):
+                #for(fuelUsageRow in fuelUsageRows):
                     <tr>
-                        <td>#(flight.number)</td>
-                        <td>#(flight.fromIata)-#(flight.toIata)</td>
-                        <td>#date(flight.duration)</td>
-                        <td>#formatDouble("%.2f", (flight.price))</td>
-                        <td>#(flight.freeSeats)</td>
+                        <td>#(fuelUsageRow.number)</td>
+                        <td>#(fuelUsageRow.from)-#(fuelUsageRow.to)</td>
+                        <td>#date(fuelUsageRow.duration)</td>
+                        <td>#(fuelUsageRow.fuelPerHour)</td>
+                        <td>#(fuelUsageRow.totalFuelConsumption)</td>
                         <td><a href="#" onclick="printReport(this)" id="fuel-usage" class="table-button">Download</a></td>
                     </tr>
                 #endfor

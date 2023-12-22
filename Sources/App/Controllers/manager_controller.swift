@@ -3,6 +3,7 @@ import Vapor
 final class ManagerController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         let manager_routes = routes.grouped("manager")
+        try manager_routes.register(collection: ReportsController())
         manager_routes.get(use: indexHandler)
         manager_routes.post("action", use: actionHandler)
         manager_routes.post("create", use: createHandler)

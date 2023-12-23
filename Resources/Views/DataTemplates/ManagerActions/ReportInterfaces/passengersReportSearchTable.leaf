@@ -14,9 +14,10 @@
                     <td>#(flight.number)</td>
                     <td>#(flight.fromIata)-#(flight.toIata)</td>
                     <td>#date(flight.fromDate, "HH:mm")</td>
-                    <td><a href="#" hx-get="/manager/reports/passengers?flightId=#(flight.flightId)" hx-swap="afterend"class="table-button">Show passengers</a></td>
+                    <td><a href="#" hx-get="/manager/reports/passengers?flightId=#(flight.flightId)" hx-target="#result" class="table-button">Show passengers</a></td>
                 </tr>
             #endfor
         </tbody>
     </table>
 </div>
+<div id="result"></div>

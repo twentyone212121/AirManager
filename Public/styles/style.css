@@ -257,7 +257,6 @@ input, select {
 .table-wrapper {
     border-radius: 15px;
     overflow: auto;
-    /*margin-top: 20px;*/
     border: 1px solid var(--black);
 }
 
@@ -344,6 +343,29 @@ input, select {
     max-width: 200px;
 }
 
+.popup-table {
+    overflow-y: scroll;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    width: 700px;
+    height: 500px;
+    background-color: white;
+}
+
+.popup-table span {
+    text-align: left;
+    color: black;
+}
+
+.popup-table .closebtn {
+    margin: 0;
+}
+
+.popup-table tbody {
+    color: black;
+}
 
 
 

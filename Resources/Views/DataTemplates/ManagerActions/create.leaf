@@ -3,7 +3,7 @@
     <form action="submit" hx-post="/manager/create" hx-swap="afterend">
         <div class="form-cell">
             <label for="flight-number">Flight number: </label>
-            <input type="text" id="flight-number" name="number">
+            <input type="number" min="0" max="9999" id="flight-number" name="number">
         </div>
         <div class="form-cell">
             <label for="from">From airport: </label>
@@ -15,7 +15,7 @@
         </div>
         <div class="form-cell">
             <label for="price">Price (USD): </label>
-            <input type="number" id="price" name="price">
+            <input type="number" min="0" max="9999" id="price" name="price">
         </div>
         <div class="form-cell">
             <label for="date-from">Date from: </label>

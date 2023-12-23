@@ -1,8 +1,10 @@
-<div class="popup-table">
-    <div class="table-wrapper">
-        <button onclick="printReport(this)" id="airport-flights" class="print-report-button">Download in PFD / Print</button>
+<div class="alert-container">
+    <div class="popup-table alert">
+        <span class="closebtn" onclick="{document.querySelector('.alert-container').remove();}">&times;</span>
         <span id="flight-number">Flight №#(flight.number)</span>
         <span id="from-date">On #(flight.fromDate)</span>
+        <button onclick="printReport(this)" id="passengers" class="print-report-button">Download in PFD / Print</button>
+        <div class="table-wrapper">
         <table id="report-table">
             <thead>
             <tr id="headings">
@@ -23,5 +25,6 @@
                 #endfor
             </tbody>
         </table>
+        </div>
     </div>
 </div>

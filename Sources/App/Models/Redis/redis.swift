@@ -48,12 +48,11 @@ class RedisManager {
         }
     }
     
-    func pushUpcomingFlights(_ flights: [UpcomingFlight]) throws {
-        try redis.delete(upcomingFlights).wait()
-        
+    func pushUpcomingFlights(_ flights: [UpcomingFlight]) throws -> EventLoopFuture<Int> {
         print("Pushing values: ")
-        let result = try redis.rpush(flights, into: upcomingFlights).wait();
-        print("Result after pushing upcoming flights: \(result)")
+        return redis.delete(upcomingFlights).flatMap {_ in
+            return self.redis.rpush(flights, into: self.upcomingFlights)
+        }
     }
     
     func getUpcomingFlights() -> EventLoopFuture<[UpcomingFlight?]> {

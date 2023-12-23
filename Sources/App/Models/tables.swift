@@ -251,6 +251,7 @@ struct FlightsTable: SqlTable {
             })
         } catch {
             print("Error initializing table: \(error)")
+            
             return
         }
         

@@ -91,6 +91,11 @@ enum DatabaseError: Error {
     case interalMalfunction
 }
 
+enum AddTicketError: Error {
+    case notEnoughSeats
+    case alreadyBought
+}
+
 class DatabaseManager {
     public var db: Connection!
 
@@ -238,13 +243,23 @@ class DatabaseManager {
     
     func addTicket(loginData: LoginData, flightId: Int) throws {
         try db.transaction {
+            // Check if the user has bought the ticket already
+            let sameRows = try db.scalar(tickets.table
+                .where(tickets.emailColumn == loginData.email && tickets.flightIdColumn == flightId)
+                .count
+            )
+            if sameRows > 0 {
+                throw AddTicketError.alreadyBought
+            }
+            
             // Check if there are available seats
             let availableSeats = try db.scalar(flights.table
                 .filter(flights.idColumn == flightId)
                 .select(flights.freeSeatsColumn)
+                .count
             )
             if availableSeats <= 0 {
-                throw DatabaseError.incorrectArguments
+                throw AddTicketError.notEnoughSeats
             }
 
             // Decrement freeSeatsColumn

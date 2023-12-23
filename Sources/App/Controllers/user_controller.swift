@@ -66,9 +66,9 @@ class UserController: RouteCollection {
         do {
             try req.application.databaseManager.addTicket(loginData: loginData, flightId: flightId)
         } catch (AddTicketError.alreadyBought) {
-            return req.view.render("DataTemplates/confirmation", ["text": "You have already bought this ticket.", "type": "fail", "to": "/search"]).encodeResponse(for: req)
+            return req.view.render("DataTemplates/confirmation", ["text": "You have already bought this ticket.", "type": "fail", "to": "#"]).encodeResponse(for: req)
         } catch (AddTicketError.notEnoughSeats) {
-            return req.view.render("DataTemplates/confirmation", ["text": "Not enough seats.", "type": "fail", "to": "/search"]).encodeResponse(for: req)
+            return req.view.render("DataTemplates/confirmation", ["text": "Not enough seats.", "type": "fail", "to": "#"]).encodeResponse(for: req)
         }
         return req.view.render("DataTemplates/confirmation", [
             "text": "You bought this flight. Find the ticket in your profile.",

@@ -76,13 +76,20 @@ final class ReportsController: RouteCollection {
     }
     
     func passengersHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        struct PassengersInfo: Content {
+            let flight: Flight
+            let passengers: [User]
+        }
         guard let flightId: Int = req.query["flightId"] else {
             throw Abort(.badRequest)
+        }
+        guard let flight = req.application.databaseManager.getFlight(id: flightId) else {
+            throw Abort(.expectationFailed)
         }
         let passengers = req.application.databaseManager.getUsers(by: flightId)
         return req.view.render(
             "DataTemplates/ManagerActions/ReportInterfaces/passengersReportTable",
-            ["passengers": passengers]
+            PassengersInfo(flight: flight, passengers: passengers)
         )
     }
 }

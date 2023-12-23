@@ -2,7 +2,7 @@
     <div class="popup-table alert">
         <span class="closebtn" onclick="{document.querySelector('.alert-container').remove();}">&times;</span>
         <span id="flight-number">Flight №#(flight.number)</span>
-        <span id="from-date">On #(flight.fromDate)</span>
+        <span id="from-date">On #date(flight.fromDate)</span>
         <button onclick="printReport(this)" id="passengers" class="print-report-button">Download in PFD / Print</button>
         <div class="table-wrapper">
         <table id="report-table">

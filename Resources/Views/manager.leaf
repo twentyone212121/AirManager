@@ -24,6 +24,11 @@
         </section>
     </main>
 </div>
+<script>
+    document.getElementById("action").addEventListener("change", ()=> {
+        document.querySelectorAll('.dateInput').min = new Date().toISOString().split('T')[0];
+    })
+</script>
 <script src="src/functions/print-report.js"></script>
 <script src="src/script.js"></script>
 </body>

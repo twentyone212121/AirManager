@@ -47,8 +47,8 @@ function printReport(element) {
 
     switch (element.id) {
         case "passengers":
-            let number = document.getElementById("flight-number");
-            let date = document.getElementById("from-date");
+            let number = document.getElementById("number").innerHTML;
+            let date = document.getElementById("from-date").innerHTML;
             reportHeading = `Passengers on flight ${number} on date ${date}`;
             printTable = printReportOnPassengers(element);
             break;

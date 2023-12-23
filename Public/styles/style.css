@@ -354,7 +354,8 @@ input, select {
     background-color: white;
 }
 
-.popup-table span {
+.popup-table span, .popup-table h3 {
+    font-weight: 400;
     text-align: left;
     color: black;
 }

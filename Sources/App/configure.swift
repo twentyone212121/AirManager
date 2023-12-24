@@ -66,7 +66,7 @@ public func configure(_ app: Application) async throws {
     )
     app.middleware.use(fileMiddleware)
     
-    app.databaseManager = DatabaseManager()
+    app.databaseManager = DatabaseManager(path: "Resources/airmanager.sqlite3")
     let redisConfig = try RedisConfiguration(hostname: "localhost", port: 6379, pool: .init(connectionRetryTimeout: .seconds(10)))
     app.redis.configuration = redisConfig
     app.redisManager = RedisManager(app.redis)

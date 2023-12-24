@@ -156,24 +156,4 @@ extension DatabaseManager {
         }
         return nil
     }
-    
-//    func getUserTickets(loginData: LoginData) throws -> [Flight] {
-//        let query = flights.table
-//            .where(flights.departureIataColumn == from &&
-//                   flights.arrivalIataColumn == to)
-//        
-//        var result: [Flight] = []
-//        do {
-//            for flight in try db.prepare(query) {
-//                result.append(Flight(
-//                    date: flight[flights.dateColumn],
-//                    fromIata: flight[flights.departureIataColumn],
-//                    fromDate: flight[flights.departureScheduledColumn],
-//                    toIata: flight[flights.arrivalIataColumn],
-//                    toDate: flight[flights.arrivalScheduledColumn],
-//                    number: flight[flights.flightNumberColumn]))
-//            }
-//        } catch {}
-//        return result
-//    }
 }

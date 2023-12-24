@@ -132,6 +132,9 @@ final class ManagerController: RouteCollection {
     }
     
     func changeFlightHandler(_ req: Request) throws -> EventLoopFuture<View> {
+        print("-------CHANGE_______")
+        let param1: String? = req.query["flightId"]
+        print("1 param is \(param1 ?? "")")
         guard let flightId: Int = req.query["flightId"] else {
             throw Abort(.expectationFailed)
         }
@@ -141,13 +144,16 @@ final class ManagerController: RouteCollection {
         guard let freeSeats: Int = req.query["freeSeats"] else {
             throw Abort(.expectationFailed)
         }
-        guard var flight = req.application.databaseManager.getFlight(id: flightId) else {
-            throw Abort(.expectationFailed)
+        guard let flight = req.application.databaseManager.getFlight(id: flightId) else {
+            throw Abort(.notFound)
         }
-        flight.price = price
-        flight.freeSeats = freeSeats
-        try req.application.databaseManager.deleteFlight(id: flightId)
-        try req.application.databaseManager.addFlight(flight: flight)
+        do {
+            try req.application.databaseManager.changeFlight(
+                id: flightId, price: price, freeSeats: freeSeats
+            )
+        } catch {
+            throw Abort(.conflict)
+        }
         
         return req.view.render(
             "DataTemplates/ManagerActions/managerFlight",

@@ -8,7 +8,6 @@ struct UpcomingFlight: Content, RESPValueConvertible {
     }
     
     func convertedToRESPValue() -> RediStack.RESPValue {
-        
         let encoder = JSONEncoder()
         let value = try! encoder.encodeAsByteBuffer(self, allocator: ByteBufferAllocator())
         return .bulkString(value)
@@ -49,7 +48,6 @@ class RedisManager {
     }
     
     func pushUpcomingFlights(_ flights: [UpcomingFlight]) throws -> EventLoopFuture<Int> {
-        print("Pushing values: ")
         return redis.delete(upcomingFlights).flatMap {_ in
             return self.redis.rpush(flights, into: self.upcomingFlights)
         }

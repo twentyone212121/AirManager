@@ -107,9 +107,8 @@ class DatabaseManager {
     public var airplanes: AirplanesTable!
     public var managers: ManagersTable!
     
-    init() {
+    init(path: String) {
         do {
-            let path = "Resources/airmanager.sqlite3"
             db = try Connection(path)
             countries = CountriesTable(db: db)
             airports = AirportsTable(db: db)
@@ -230,6 +229,13 @@ class DatabaseManager {
                 flights.departureScheduledColumn <- flight.fromDate,
                 flights.airplaneIdColumn <- flight.airplaneId)
         
+        try db.run(query)
+    }
+    
+    func changeFlight(id: Int, price: Double, freeSeats: Int) throws {
+        let query = flights.table
+            .where(flights.idColumn == id)
+            .update(flights.priceColumn <- price, flights.freeSeatsColumn <- freeSeats)
         try db.run(query)
     }
     

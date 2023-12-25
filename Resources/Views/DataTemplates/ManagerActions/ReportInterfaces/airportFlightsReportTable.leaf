@@ -1,5 +1,5 @@
 <div class="result">
-    <button onclick="printReport(this)" id="airport-flights" class="print-report-button">Download in PFD / Print</button>
+    <button onclick="printReport(this)" id="airport-flights" class="print-report-button">Download in PDF / Print</button>
     <h3>Flights from <span id="airport-name">#(airport)</span></h3>
     <div class="table-wrapper">
         <table id="report-table">

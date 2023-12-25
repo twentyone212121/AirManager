@@ -13,31 +13,32 @@
         <section class="authorization">
             <form hx-post="/user/register">
                 <div class="form-cell">
-                    <label for="full name">Name</label>
-                    <input id="name" name="fullName">
+                    <label for="full-name">Full name</label>
+                    <input type="text" id="full-name" name="fullName" pattern="[A-Za-z '-]+" placeholder="e.g. Alina Pavliuk" required>
                 </div>
                 <div class="form-cell">
                     <label for="gender">Gender</label>
-                    <select id="gender" name="gender">
+                    <select id="gender" name="gender" required>
+                        <option disabled selected>Select your gender</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
                     </select>
                 </div>
                 <div class="form-cell">
                     <label for="phone">Phone number</label>
-                    <input id="phone" name="phoneNumber">
+                    <input type="tel" id="phone" name="phoneNumber" pattern="[0-9]{10,11}" placeholder="e.g. 04032214564" required>
                 </div>
                 <div class="form-cell">
                     <label for="passport">Passport number</label>
-                    <input id="passport" name="passportNumber">
+                    <input type="text" id="passport" name="passportNumber" pattern="[A-Z]{2}[0-9]{4}" placeholder="e.g. HY9032" required>
                 </div>
                 <div class="form-cell">
                     <label for="email">Email</label>
-                    <input id="email" type="email" name="email">
+                    <input type="email" id="email" type="email" name="email" placeholder="e.g. alina@gmail.com" required>
                 </div>
                 <div class="form-cell">
                     <label for="password">Password</label>
-                    <input id="password" type="password" name="password">
+                    <input type="password" id="password" type="password" minlength="8" name="password" placeholder="At least 8 characters" required>
                 </div>
                 <button type="submit">Sign up</button>
             </form>

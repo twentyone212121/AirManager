@@ -17,11 +17,11 @@
                 <form action="" hx-get="/search" hx-target="#result">
                     <div class="form-cell">
                         <label for="from">From</label>
-                        <input type="text" id="from" name="from">
+                        <input type="text" id="from" name="from" placeholder="City or Airport">
                     </div>
                     <div class="form-cell">
                         <label for="to">To</label>
-                        <input type="text" id="to" name="to">
+                        <input type="text" id="to" name="to" placeholder="City or Airport">
                     </div>
                     <button type="submit">Search</button>
                 </form>

@@ -38,7 +38,7 @@
                         <td>#(flight.number)</td>
                         <td>#formatDouble("%.2f", (flight.duration))</td>
                         <td>#formatDouble("%.2f", (flight.price))</td>
-                        <td><a href="#" hx-get="/user/buy/#(flight.flightId)" hx-swap="afterend"class="table-button">Buy the ticket</a></td>
+                        <td><a href="#" hx-get="/user/buy/#(flight.flightId)" hx-swap="afterend" class="table-button">Buy the ticket</a></td>
                     </tr>
                 #endfor
             </tbody>
